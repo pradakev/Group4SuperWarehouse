@@ -16,7 +16,7 @@ void wholesaleClub::updateMembers()
     }
     else
     {
-        cout << "Successfully opened file" << endl;
+        cout << "Successfully opened file warehouse shoppers." << endl;
     }
 
     string name;
@@ -74,7 +74,7 @@ void wholesaleClub::updateSalesforMembers()
        }
        else
        {
-           cout << "File open success" << endl;
+           cout << "File opened with success: " << fileNames[i] << endl;
        }
         while(getline(instream, date))
        {
