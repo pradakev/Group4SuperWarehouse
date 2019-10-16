@@ -43,3 +43,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     forLogos.qrc
+
+DISTFILES += \
+    DaySalesTxtFiles/day1.txt \
+    DaySalesTxtFiles/day2.txt \
+    DaySalesTxtFiles/day3.txt \
+    DaySalesTxtFiles/day4.txt \
+    DaySalesTxtFiles/day5.txt \
+    WarehouseMembersInfoTxt/warehouse shoppers.txt

@@ -3,6 +3,15 @@
 
 #include <QMainWindow>
 
+//ADT Files
+#include "container.h"
+#include "item.h"
+#include "member.h"
+#include "preferredmember.h"
+#include "sales.h"
+#include "wholesaleclub.h"
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE

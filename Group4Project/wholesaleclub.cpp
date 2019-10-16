@@ -42,7 +42,7 @@ void wholesaleClub::updateMembers()
         Member temp(name, id, memberShip, expDate);
         memberDatabase.push_back(temp);
     }
-    cout << "database size: " << memberDatabase.length();
+//    cout << "database size: " << memberDatabase.length();
     //Close file.
     reader.close();
 
@@ -63,10 +63,20 @@ void wholesaleClub::updateSalesforMembers()
    string fileNames[] = {"day1.txt", "day2.txt", "day3.txt", "day4.txt",
                       "day5.txt"};
 
+
    for(int i = 0; i < 5; i++)
    {
        instream.open(fileNames[i]);
-       while(!instream.eof())
+       //CHECK IF FILE OPENED SUCCESSFULY
+       if(!instream.fail())
+       {
+           cout << "File did not open successfully." << endl;
+       }
+       else
+       {
+           cout << "File open success" << endl;
+       }
+        while(getline(instream, date))
        {
            getline(instream, date);
            getline(instream, id);
