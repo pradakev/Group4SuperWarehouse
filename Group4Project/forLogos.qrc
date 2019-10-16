@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Logos/membersGra.jpg</file>
+        <file>Logos/salesReportg.gif</file>
+        <file>Logos/wholeSaleClubLogo.png</file>
+    </qresource>
+</RCC>
