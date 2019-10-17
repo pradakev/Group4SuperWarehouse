@@ -11,6 +11,11 @@
 #include "sales.h"
 #include "wholesaleclub.h"
 
+#include <iostream>
+
+using namespace std;
+
+#include <string>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,5 +34,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    wholesaleClub myClub;
+
 };
 #endif // MAINWINDOW_H

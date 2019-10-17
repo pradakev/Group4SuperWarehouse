@@ -26,6 +26,7 @@ public:
     string dateSalesSum(string date);
 
     string totalPurchasesByMember(string id);
+    string memberIdFromName(string name);
 
     /*REQ. #2
      * A user should be able to enter
