@@ -25,15 +25,15 @@ void wholesaleClub::updateMembers()
     string expDate;
 
     //Read in a loop until there is nothing to get from the file.
-    while(getline(reader, name))
+    while(getline(reader, name, '\n'))
     {
         //Get Info
-        getline(reader, id);
-        getline(reader, memberShip);
-        getline(reader, expDate);
+        getline(reader, id, '\n');
+        getline(reader, memberShip, '\n');
+        getline(reader, expDate, '\n');
 
         //Testing
-//        cout << "Name: " << name << endl;
+        cout << "Name: " << name  << "."<< endl;
 //        cout << id << endl;
 //        cout << memberShip << endl;
 //        cout << expDate << endl;
@@ -180,10 +180,33 @@ string wholesaleClub::totalPurchasesByMember(string id)
 
     for(; it != memberDatabase.end(); it++)
     {
-        if ((*it).getId() == id)
+        cout << (*it).getId() << "." << endl;
+        cout << id << "." << endl;
+        if (id != (*it).getId())
         {
+            cout << "Not Found" << endl;
+        }
+        if (id == (*it).getId())
+        {
+            cout << "ID Found for total purchases." << endl;
             totalPurchases = (*it).allPurchasesReport();
             return totalPurchases;
+        }
+    }
+    return "Member not found.";
+}
+
+string wholesaleClub::memberIdFromName(string name)
+{
+    string id;
+    Container<Member>::Iterator it;
+    it = memberDatabase.begin();
+    for(; it != memberDatabase.end(); it++)
+    {
+        if((*it).getName() == name)
+        {
+            id = (*it).getId();
+            return id;
         }
     }
     return "Member not found.";
