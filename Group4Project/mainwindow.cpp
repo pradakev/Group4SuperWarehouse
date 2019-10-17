@@ -68,3 +68,57 @@ void MainWindow::on_MemberPurchases_Button_clicked()
     //Now send Qstring to textBrowser
     ui->OutputMembersText->setText(qMemberPurchases);
 }
+
+void MainWindow::goToPage(int pg){
+ui->stackedWidget->setCurrentIndex(pg);
+}
+
+void MainWindow::on_WelcomeSalesButton_clicked()
+{
+    goToPage(2);
+}
+
+void MainWindow::on_pushButton_SalesReportDone_clicked()
+{
+    goToPage(0);
+}
+
+void MainWindow::on_pushButton_dailyReport_clicked()
+{
+    goToPage(4);
+}
+
+void MainWindow::on_WelcomeMembersButton_clicked()
+{
+    goToPage(1);
+}
+
+void MainWindow::on_DoneMembersButton_clicked()
+{
+    goToPage(0);
+}
+
+void MainWindow::on_dailyReportPushButton_clicked()
+{
+    goToPage(2);
+}
+
+void MainWindow::on_purchases_done_pushButton_clicked()
+{
+    goToPage(2);
+}
+
+void MainWindow::on_pushButton_memberPurchasesReport_clicked()
+{
+    goToPage(3);
+}
+
+void MainWindow::on_pushButton_customReportOptions_clicked()
+{
+    goToPage(10);
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    goToPage(2);
+}
