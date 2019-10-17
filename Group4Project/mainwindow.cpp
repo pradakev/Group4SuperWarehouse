@@ -122,3 +122,124 @@ void MainWindow::on_pushButton_3_clicked()
 {
     goToPage(2);
 }
+
+void MainWindow::on_WelcomeDisplayInventoryButton_clicked()
+{
+    stringstream ss;
+    string date,
+                  id,
+                  name,
+                  priceStr,
+                  quantityStr;
+       double price;
+       int quantity;
+       //date, id, item name, price and quantity,
+       ifstream instream;
+
+       string fileNames[] = {"day1.txt", "day2.txt", "day3.txt", "day4.txt",
+                          "day5.txt"};
+
+
+       for(int i = 0; i < 5; i++)
+       {
+           instream.open(fileNames[i]);
+           //CHECK IF FILE OPENED SUCCESSFULY
+           if(!instream.fail())
+           {
+               cout << "File did not open successfully." << endl;
+           }
+           else
+           {
+               cout << "File opened with success: " << fileNames[i] << endl;
+           }
+           while(getline(instream, date))
+           {
+               getline(instream, id);
+               getline(instream, name);
+               getline(instream, priceStr, '\t');
+               getline(instream, quantityStr);
+               ss << "ID: " << id << endl;
+               ss << "ITEM: " << name << endl;
+               ss << "PRICE: " << priceStr << endl;
+               ss << "QTY: " << quantityStr << endl;
+               ss << endl << endl;
+               //convert priceStr & quantityStr to double & int respectively
+           }
+           instream.close();
+       }
+       QString temp;
+       temp = QString::fromStdString(ss.str());
+    ui->displayInvBrows->setText(temp);
+    goToPage(11);
+}
+
+void MainWindow::on_DoneButtonDI_clicked()
+{
+    goToPage(0);
+}
+
+void MainWindow::on_doneItemSalesButton_clicked()
+{
+    goToPage(0);
+}
+
+void MainWindow::on_AddNewMemberPage_clicked()
+{
+    QString temp = "Add new member button clicked!";
+    ui->OutputMembersText->setText(temp);
+}
+
+void MainWindow::on_ShowAllMembers_clicked()
+{
+    QString temp = "Show all member button clicked!";
+    ui->OutputMembersText->setText(temp);
+
+}
+
+void MainWindow::on_DeleteMemberPage_clicked()
+{
+    QString temp = "Delete member button clicked!";
+    ui->OutputMembersText->setText(temp);
+
+}
+
+void MainWindow::on_UpdateExisitingMemberPage_clicked()
+{
+    QString temp = "Update  member button clicked!";
+    ui->OutputMembersText->setText(temp);
+}
+
+void MainWindow::on_ShowAllPreferredMembers_clicked()
+{
+    QString temp = "Show preferred member button clicked!";
+    ui->OutputMembersText->setText(temp);
+
+}
+
+void MainWindow::on_ShowAllBasicMembers_clicked()
+{
+    QString temp = "Show basic member button clicked!";
+    ui->OutputMembersText->setText(temp);
+
+}
+
+void MainWindow::on_MembershipRecommendationButton_clicked()
+{
+    QString temp = "Show member rec button clicked!";
+    ui->OutputMembersText->setText(temp);
+
+}
+
+void MainWindow::on_ShowExpiringMembersByMonth_clicked()
+{
+    QString temp = "Show exp member button clicked!";
+    ui->OutputMembersText->setText(temp);
+
+}
+
+void MainWindow::on_purchases_display_pushButton_clicked()
+{
+    QString temp = "Display button clicked!";
+    ui->purchasesBrowser->setText(temp);
+
+}

@@ -53,6 +53,30 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_WelcomeDisplayInventoryButton_clicked();
+
+    void on_DoneButtonDI_clicked();
+
+    void on_doneItemSalesButton_clicked();
+
+    void on_AddNewMemberPage_clicked();
+
+    void on_ShowAllMembers_clicked();
+
+    void on_DeleteMemberPage_clicked();
+
+    void on_UpdateExisitingMemberPage_clicked();
+
+    void on_ShowAllPreferredMembers_clicked();
+
+    void on_ShowAllBasicMembers_clicked();
+
+    void on_MembershipRecommendationButton_clicked();
+
+    void on_ShowExpiringMembersByMonth_clicked();
+
+    void on_purchases_display_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     wholesaleClub myClub;
