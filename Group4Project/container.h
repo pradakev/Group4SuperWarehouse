@@ -269,16 +269,49 @@ void Container<O>::push_back(O value)      //IN - value to add to back of list
     //Both set to the first node added
     newNode = new Node<O>(value);
     newNode->next = NULL;
-    if(!head && !tail)
+    if(head == NULL)
     {
         head = newNode;
         tail = newNode;
-        return;
-    }
+        cout << "=================================" << endl;
+        cout << "Pushing back to empty list" << endl;
+        cout << "=================================" << endl;
 
-    current = tail;
-    tail = newNode;
-    current->next = tail;
+    }
+    else if(head == tail)
+    {
+        head->next = newNode;
+        tail = newNode;
+        cout << "=================================" << endl;
+        cout << "Pushing back to single list" << endl;
+        cout << "=================================" << endl;
+    }
+    else
+    {
+        current = tail;
+        current->next = newNode;
+        tail = newNode;
+        cout << "=================================" << endl;
+        cout << "Pushing back to full list" << endl;
+        cout << "=================================" << endl;
+
+    }
+//    if(!head && !tail)
+//    {
+//        head = newNode;
+//        tail = newNode;
+//        cout << "=================================" << endl;
+//        cout << "Pushing back to empty list" << endl;
+//        cout << "=================================" << endl;
+//        return;
+//    }
+
+//    current = tail;
+//    tail = newNode;
+//    current->next = tail;
+//    cout << "=================================" << endl;
+//    cout << "Pushing back non-empty list" << endl;
+//    cout << "=================================" << endl;
 }
 
 template <typename O>

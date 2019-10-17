@@ -15,6 +15,14 @@ public:
 	* CONSTRUCTOR(S)
 	********************/
 	Item();
+    Item(const Item& right)
+    {
+        name = right.name;
+        totalSalesPrice = right.totalSalesPrice;
+        quantityAvailable = right.quantityAvailable;
+        quantitySold = right.quantitySold;
+        dayBought = right.dayBought;
+    }
 	Item(std::string name, double totalSalesPrice);
     Item(string nName, double nPrice, int nQuantityBought, string nDayBought);
 	Item(std::string name, double totalSalesPrice, 

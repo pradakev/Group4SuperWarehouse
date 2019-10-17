@@ -36,7 +36,7 @@ void MainWindow::on_MemberPurchases_Button_clicked()
     //12345
 
     //MemberPurchases string
-    string memberPurchases;
+    string memberPurchases = "";
 
     //PROCESSING: memberPurchases will contain the purchases
     //for the member. I get this through functions in wholesaleClub class
@@ -46,6 +46,7 @@ void MainWindow::on_MemberPurchases_Button_clicked()
     {
         cout << "name is empty. id is not empty." << endl;
         //if Name is empty but id is edited.
+        id = id + "\n";
         memberPurchases = myClub.totalPurchasesByMember(id);
 
     }
@@ -61,7 +62,7 @@ void MainWindow::on_MemberPurchases_Button_clicked()
     }
 
     //Once you have string of memberPurchases, output to textBrowser
-
+    cout << "Member Purchase Report: " << memberPurchases << "." <<endl;
     //First convert string to Qstring
     QString qMemberPurchases = QString::fromStdString(memberPurchases);
 

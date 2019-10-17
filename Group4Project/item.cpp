@@ -50,6 +50,7 @@ int Item::getQuantitySold()
 
 string Item::allInfo()
 {
+    cout << "allInfo:" << endl;
     stringstream ss;
     ss << name << endl;
     ss << totalSalesPrice << "\t";

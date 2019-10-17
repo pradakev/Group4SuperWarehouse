@@ -62,7 +62,6 @@ public:
 	/*******************
 	* MEMBER DATA
 	********************/
-
 private:
 	std::string name;		//IN OUT - Name of Member
 	std::string iD;			//IN OUT - iD of Member

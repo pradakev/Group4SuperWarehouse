@@ -46,6 +46,7 @@ double Member::sumPurchasesDate(string date)
 
 void Member::addItem(Item thing)
 {
+    cout << "Adding item to member's ItemsBought database." << endl;
     itemsBought.push_back(thing);
 }
 
@@ -104,9 +105,11 @@ string Member::allPurchasesReport()
     for(it = itemsBought.begin(); it != itemsBought.end();
         it++)
     {
+        cout << (*it).allInfo() << endl;
         ss << (*it).allInfo() << endl;
     }
     report = ss.str();
+    cout << "report: " << report << endl;
     return report;
 
 }

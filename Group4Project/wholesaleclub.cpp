@@ -4,7 +4,7 @@
 
 wholesaleClub::wholesaleClub()
 {
-
+    //NOTHING
 }
 
 void wholesaleClub::updateMembers()
@@ -29,7 +29,9 @@ void wholesaleClub::updateMembers()
     {
         //Get Info
         getline(reader, id, '\n');
+
         getline(reader, memberShip, '\n');
+
         getline(reader, expDate, '\n');
 
         //Testing
@@ -72,7 +74,7 @@ void wholesaleClub::updateSalesforMembers()
    {
        instream.open(fileNames[i]);
        //CHECK IF FILE OPENED SUCCESSFULY
-       if(!instream.fail())
+       if(instream.fail())
        {
            cout << "File did not open successfully." << endl;
        }
@@ -94,7 +96,9 @@ void wholesaleClub::updateSalesforMembers()
            //convert priceStr & quantityStr to double & int respectively
            price = stod(priceStr);
            quantity = stoi(quantityStr);
-           addItemToMember(Item(name, price, quantity, date), id);
+
+           Item *temp = new Item(name, price, quantity, date);
+           addItemToMember(*temp, id);
        }
        instream.close();
    }
@@ -106,10 +110,16 @@ void wholesaleClub::addItemToMember(Item a, string iD)
     Container<Member>::Iterator it;
     it = memberDatabase.begin();
 
-    cout << "database size: " << memberDatabase.length();
+    cout << "database size: " << memberDatabase.length() << endl;
+
     for(it = memberDatabase.begin(); it != memberDatabase.end(); it++)
         if ((*it).getId() == iD)
+        {
+            cout << "Adding item to member found!" << endl;
+            cout << "Member to add item to: " << (*it).getName();
             (*it).addItem(a);
+        }
+
 }
 
 
@@ -180,16 +190,21 @@ string wholesaleClub::totalPurchasesByMember(string id)
 
     for(; it != memberDatabase.end(); it++)
     {
+        //TESTING STRINGS
         cout << (*it).getId() << "." << endl;
         cout << id << "." << endl;
-        if (id != (*it).getId())
-        {
-            cout << "Not Found" << endl;
-        }
-        if (id == (*it).getId())
+
+        //COMPARISON
+//        if (id != (*it).getId())
+//        {
+//            cout << "Not Found" << endl;
+//        }
+//        else if (id == (*it).getId())
+        if(id.compare((*it).getId()))
         {
             cout << "ID Found for total purchases." << endl;
             totalPurchases = (*it).allPurchasesReport();
+            cout << "tP:"<< totalPurchases << endl;
             return totalPurchases;
         }
     }
