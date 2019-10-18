@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -242,4 +243,22 @@ void MainWindow::on_purchases_display_pushButton_clicked()
     QString temp = "Display button clicked!";
     ui->purchasesBrowser->setText(temp);
 
+}
+
+void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
+{
+    //Takes care of #3 from the Warehouse docx
+    string id;
+    string str;
+    Container<Member>::Iterator it;
+    myClub.memberDatabase.select_sort();
+    for(it = myClub.memberDatabase.begin(); it != myClub.memberDatabase.end();i++){
+
+        id = (*it).getId();
+        str += myClub.totalPurchasesByMember(id);
+        str += "\n\n";
+    }
+    str += "\n";
+    str += (*it).sumTotalPurchases();
+    ui->OutputMembersText->setText(QString::fromStdString(str));
 }
