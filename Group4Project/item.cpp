@@ -60,11 +60,24 @@ Item::Item(string nName, double nPrice, int nQuantityBought, string nDayBought)
     dayBought = nDayBought;
 }
 
-Item::~Item(){
-    cout << "\n=====An Item has been deleted=====" <<endl;
-    cout << allInfo();
-    cout << "\n\n=====That's what was deleted=====\n\n";
+Item::Item(const Item& paramItem)
+{
+	name = paramItem.name;
+	totalSalesPrice = paramItem.totalSalesPrice;
+	quantityAvailable = paramItem.quantityAvailable;
+	quantitySold = paramItem.quantitySold;
+    dayBought = paramItem.dayBought;
 }
+
+//DELETE IF NOT NEEDED - TONI
+/*
+Item::~Item()
+{
+    cout << "\n=====Item DESTRUCTOR CALLED======" << endl;
+}
+*/
+
+
 /*******************
 * ACCESSOR(S)
 ********************/
@@ -77,7 +90,7 @@ Item::~Item(){
  * POSTCONDITIONS
  *  Appropriate parameter is returned.
  ******************************************************************************/
-string Item::getDateBought()
+string Item::getDateBought() const
 {
     return dayBought;
 }
@@ -91,7 +104,7 @@ string Item::getDateBought()
  * POSTCONDITIONS
  *  Appropriate parameter is returned.
  ******************************************************************************/
-std::string Item::getName()
+std::string Item::getName() const
 {
 	return name;
 }
@@ -105,7 +118,7 @@ std::string Item::getName()
  * POSTCONDITIONS
  *  Appropriate parameter is returned.
  ******************************************************************************/
-double Item::getPrice()
+double Item::getPrice() const
 {
 	return totalSalesPrice;
 }
@@ -119,7 +132,7 @@ double Item::getPrice()
  * POSTCONDITIONS
  *  Appropriate parameter is returned.
  ******************************************************************************/
-int Item::getQuantityAvailable()
+int Item::getQuantityAvailable() const
 {
 	return quantityAvailable;
 }
@@ -133,33 +146,11 @@ int Item::getQuantityAvailable()
  * POSTCONDITIONS
  *  Appropriate parameter is returned.
  ******************************************************************************/
-int Item::getQuantitySold()
+int Item::getQuantitySold() const
 {
 	return quantitySold;
 }
 
-/*******************************************************************************
- * allInfo() : Class Item
- * -----------------------------------------------------------------------------
- * This method returns the items info in a string.
- * -----------------------------------------------------------------------------
- * PRECONDITIONS
- * POSTCONDITIONS
- *  String with info of Item is returned.
- ******************************************************************************/
-string Item::allInfo()
-{
-    stringstream ss;
-    ss << name << endl;
-    ss << totalSalesPrice << "\t";
-    ss << quantitySold << endl;
-    ss << dayBought << endl;
-
-    string all;
-    all = ss.str();
-    return all;
-    
-}
 /*******************
 * MUTATOR(S)
 ********************/
@@ -184,16 +175,19 @@ void Item::changeQAvailable(int available)
 	quantityAvailable = available;
 }
 
-void Item::outputInfo()
-{
-	cout << "Item: " << getName() << endl;
-	cout << "Sales Price: " << getPrice() << endl;
-	cout << "Quantity Available: " << getQuantityAvailable() << endl;
-	cout << "Quantity Sold: " << getQuantitySold() << endl;
-}
-
 double Item::operator+(const Item& RHSITEM) const
 {
     return(totalSalesPrice + RHSITEM.totalSalesPrice);
 }
 
+ostream& operator<<(ostream& os, const Item& paramItem)
+{
+    os << "\n========ITEM OBJECT========\n"
+        << "++NAME: " << paramItem.name << "\n"
+        << "++TOTAL SALES PRICE: " << paramItem.totalSalesPrice << "\n"
+        << "++QTY: " << paramItem.quantityAvailable << "\n"
+        << "++SOLD: " << paramItem.quantitySold << "\n"
+        << "++DATE BOUGHT: " << paramItem.dayBought << "\n"
+        << "==============================\n";
+    return os;
+}

@@ -42,9 +42,8 @@ public:
 		/********************************
      	***** Overloaded Operators *****
      	********************************/
-        O operator*();
+        O& operator*();
         Iterator operator++(int n);
-      
         bool operator!=(const Iterator &right) const;
         bool operator==(const Iterator &right) const;
     };
@@ -78,6 +77,8 @@ public:
      ***** Overloaded Operators *****
      ********************************/
     Container & operator=( const Container<O> &list ); // pointer to an Container object
+    template<typename U>
+    friend ostream& operator<<(ostream& os, const Container<U>& paramCont);
 };
 /*********************************************************
  * class Container
@@ -130,6 +131,7 @@ Container<O>::Container()
 template <typename O>
 Container<O>::~Container()
 {
+    cout << "\n======CONTAINER DESTRUCTOR CALL=======" << endl;
     Node<O>* current = head;
     Node<O>* upComing;
     while(current != NULL){
@@ -137,8 +139,9 @@ Container<O>::~Container()
         delete current;
         current = upComing;
     }
-
     head = NULL;
+    tail = NULL;
+    cout << "======CONTAINER DESTROYED SUCCESSFULLY=======" << endl;
 }
 
 /*****************
@@ -358,6 +361,7 @@ void Container<O>::select_sort()
 template <typename O>
 Container<O>& Container<O>::operator=(const Container<O> &list)  // pointer to an Container object
 {
+    cout << "Overloaded Assignment Operator Called\n";
     Node<O> *current;
     Node<O> *nextNode;
 
@@ -430,7 +434,7 @@ Container<O>::Iterator::Iterator(Node<O> *ptr) //pointer to an O object
 *   Returns the data in node.
 **************************************************************************/
 template <typename O>
-O Container<O>::Iterator::operator*()
+O& Container<O>::Iterator::operator*()
 {
     return current->data;
 }
@@ -453,6 +457,21 @@ typename Container<O>::Iterator Container<O>::Iterator::operator++(int n)
     return Iterator(current);
 }
 
+template<typename O>
+ostream& operator<<(ostream& os, const Container<O>& paramCont)
+{
+    Node<O>* current;
+    current = paramCont.head;
+
+    while(current)
+    {
+        os << current->data;
+        if(paramCont.head != paramCont.tail && current->next)
+            os << " ";
+        current = current->next;
+    }
+    return os;
+}
 template<typename O>
 bool Container<O>::Iterator::operator ==(const Iterator& right) const
 {
