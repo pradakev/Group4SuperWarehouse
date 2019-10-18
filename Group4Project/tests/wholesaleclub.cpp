@@ -2,6 +2,8 @@
 #include <sstream>
 #include <iomanip>
 
+#define ITEM_READ_COMMENTS 0        //change 0 to 1 to display these commments
+
 wholesaleClub::wholesaleClub()
 {
 
@@ -32,28 +34,15 @@ void wholesaleClub::updateMembers()
         getline(reader, memberShip);
         getline(reader, expDate);
 
-        //Testing
-//        cout << "Name: " << name << endl;
-//        cout << id << endl;
-//        cout << memberShip << endl;
-//        cout << expDate << endl;
-
         //Add to database
-        Member temp(name, id, memberShip, expDate);
-        memberDatabase.push_back(temp);
-    }
-//    cout << "database size: " << memberDatabase.length();
-    //Close file.
+        memberDatabase.push_back(Member(name, id, memberShip, expDate));
+    }    
     reader.close();
-    Container<Member>::Iterator iter;
-    for(iter = memberDatabase.begin(); iter != memberDatabase.end(); iter++)
-    {
-        cout << "NAME:" << (*iter).getName() << endl;
-    }
 }
 
 void wholesaleClub::updateSalesforMembers()
 {
+    cout << "=========Updating Member Purchases===========" << endl;
     string date,
               id,
               name,
@@ -86,11 +75,13 @@ void wholesaleClub::updateSalesforMembers()
            getline(instream, name);
            getline(instream, priceStr, '\t');
            getline(instream, quantityStr);
+#if ITEM_READ_COMMENTS
            cout << "date: " << date << endl;
            cout << "id: " << id << endl;
            cout << "name: " << name << endl;
            cout << "price: " << priceStr << endl;
            cout << "quantity: " << quantityStr << endl;
+#endif
            //convert priceStr & quantityStr to double & int respectively
            price = stod(priceStr);
            quantity = stoi(quantityStr);
@@ -101,15 +92,15 @@ void wholesaleClub::updateSalesforMembers()
    cout << "=========Done Updating===========" << endl;
 }
 
-void wholesaleClub::addItemToMember(Item a, string iD)
+void wholesaleClub::addItemToMember(const Item& a, string iD)
 {
     Container<Member>::Iterator it;
     it = memberDatabase.begin();
+    cout << a << endl;
 
-    cout << "database size: " << memberDatabase.length();
     for(it = memberDatabase.begin(); it != memberDatabase.end(); it++)
-        if ((*it).getId() == iD)
-            (*it).addItem(a);
+            if ((*it).getId() == iD)
+                (*it).addItem(a);
 }
 
 
@@ -123,48 +114,41 @@ string wholesaleClub::dateSalesSum(string date)
 
     answer = to_string(totalAgg);
     return answer;
-    //Convert totalAgg to a string.
-    //Then string would be converted to Qstring for GUI.
-
 }
 
 void wholesaleClub::displayMembers()
 {
-
-    //REMEMBER TO INCLUDE END ITERATOR ITEM OR ELSE WON"T WORK
-    Container<Member>::Iterator useMe;
-    for(useMe = memberDatabase.begin(); useMe != memberDatabase.end(); useMe++)
-    {
-
-        cout << (*useMe).getName() << endl;
-    }
-    useMe = memberDatabase.end();
-    cout << (*useMe).getName() << endl;
-
+    cout << memberDatabase << endl;
 }
-
-
 
 string wholesaleClub::memberPurchasesReport()
 {
     string result;
     stringstream myStream;
     Container<Member>::Iterator iter;
+    
     //sort membership
-    //memberDatabase.select_sort();
+    memberDatabase.select_sort();
+    
     myStream  << "ID:" << setw(30) << setfill('_')
     << "Name:" << setw(30) << setfill('_') << endl;
-    result = myStream.str();
     for(iter = memberDatabase.begin(); iter != memberDatabase.end(); iter++)
     {
         myStream << (*iter).getId() << setw(30) << setfill('.') 
             << (*iter).getName() << setw(30) << setfill('.');
-        result += myStream.str();
-        //member id, name, membership type
+        //needs a function in member class to return a string of
+        //all items and their info for all items of the currently
+        //accessed member
+
         //item name, quantity, price
     }
     result = myStream.str();
-    cout << result << endl;
+    cout << "RESULT: " << result << endl; 
+    for(iter = memberDatabase.begin(); iter != memberDatabase.end(); iter++)
+    {
+        cout << "\n\n======Purchases by " << (*iter).getName() << "======\n";
+        cout << (*iter).getItems() << endl;
+    }
     return result;
 }
 
