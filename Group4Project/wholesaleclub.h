@@ -22,11 +22,11 @@ public:
 
     //REPORTS
 
-    string memberPurchasesReport();
-    string dateSalesSum(string date);
+    string memberPurchasesReport(string membership);
+    string dateSalesSum(string date, string membership);
 
-    string totalPurchasesByMember(string id);
-    string memberIdFromName(string name);
+    string totalPurchasesByMember(string id, string membership);
+    string memberIdFromName(string name, string membership);
 
     /*REQ. #2
      * A user should be able to enter
@@ -36,8 +36,8 @@ public:
      * */
 
     //Initialize databases
-    Container<Member> memberDatabase;
-
+    Container<Member> basicMemberDatabase;
+    Container<Member> preferredMemberDatabase;
 };
 
 #endif // WHOLESALECLUB_H

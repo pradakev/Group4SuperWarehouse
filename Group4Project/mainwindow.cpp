@@ -252,13 +252,25 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
     string str;
     Container<Member>::Iterator it;
     myClub.memberDatabase.select_sort();
-    for(it = myClub.memberDatabase.begin(); it != myClub.memberDatabase.end();i++){
-
+    for(it = myClub.memberDatabase.begin(); it != myClub.memberDatabase.end();it++){
         id = (*it).getId();
         str += myClub.totalPurchasesByMember(id);
         str += "\n\n";
     }
     str += "\n";
+    it = myClub.memberDatabase.begin();
     str += (*it).sumTotalPurchases();
     ui->OutputMembersText->setText(QString::fromStdString(str));
+}
+
+void MainWindow::on_inventory_search_pushButton_clicked()
+{
+    QString temp = ui->inventory_input_lineEdit->text();
+    string str = temp.toStdString();
+
+}
+
+void MainWindow::on_inventory_searchAll_pushButton_clicked()
+{
+
 }
