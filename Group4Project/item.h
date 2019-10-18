@@ -20,7 +20,7 @@ public:
 	Item(std::string name, double totalSalesPrice, 
 		 int quantityAvailable, int quantitySold);
     Item(const Item& paramItem);
-    /*******************
+
 	* ACCESSOR(S)
 	********************/
 	std::string getName() const;

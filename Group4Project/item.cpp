@@ -11,7 +11,7 @@
  *  A charStack object is created
  ******************************************************************************/
 Item::Item():name("Item Name"), totalSalesPrice(0), quantityAvailable(0), quantitySold(0)
-{
+{cout << "\n========INSIDE CONSTRUCTOR 1========\n";
 }
 
 /*******************************************************************************
@@ -24,7 +24,7 @@ Item::Item():name("Item Name"), totalSalesPrice(0), quantityAvailable(0), quanti
  *  A charStack object is created
  ******************************************************************************/
 Item::Item(std::string name, double totalSalesPrice):name(name), totalSalesPrice(totalSalesPrice), quantityAvailable(0), quantitySold(0)
-{
+{cout <<"\n========INSIDE CONSTRUCTOR 2========\n";
 }
 
 /*******************************************************************************
@@ -38,7 +38,7 @@ Item::Item(std::string name, double totalSalesPrice):name(name), totalSalesPrice
  *  A charStack object is created
  ******************************************************************************/
 Item::Item(std::string name, double totalSalesPrice, int quantityAvailable, int quantitySold):name(name), totalSalesPrice(totalSalesPrice), quantityAvailable(quantityAvailable), quantitySold(quantitySold)
-{
+{cout << "\n========INSIDE CONSTRUCTOR 3========\n";
 }
 
 /*******************************************************************************
@@ -53,6 +53,7 @@ Item::Item(std::string name, double totalSalesPrice, int quantityAvailable, int 
  ******************************************************************************/
 Item::Item(string nName, double nPrice, int nQuantityBought, string nDayBought)
 {
+    cout << "\n========INSIDE CONSTRUCTOR 4========\n";
     name = nName;
     totalSalesPrice = nPrice;
     quantitySold = nQuantityBought;
@@ -75,6 +76,7 @@ Item::~Item()
     cout << "\n=====Item DESTRUCTOR CALLED======" << endl;
 }
 */
+
 
 /*******************
 * ACCESSOR(S)

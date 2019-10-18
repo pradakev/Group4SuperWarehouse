@@ -50,7 +50,9 @@ double Member::sumPurchasesDate(string date)
 void Member::addItem(const Item& thing)
 {
     cout << thing << endl;
+
     itemsBought.push_back(thing);
+    cout << "========ITEM HAS BEEN PUSHED========\n";
 }
 
 /*******************
