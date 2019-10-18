@@ -19,6 +19,7 @@ public:
     Item(string nName, double nPrice, int nQuantityBought, string nDayBought);
 	Item(std::string name, double totalSalesPrice, 
 		 int quantityAvailable, int quantitySold);
+    ~Item();
 	/*******************
 	* ACCESSOR(S)
 	********************/

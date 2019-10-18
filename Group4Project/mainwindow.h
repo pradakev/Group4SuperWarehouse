@@ -16,7 +16,7 @@
 using namespace std;
 
 #include <string>
-
+#include <string.h>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -76,6 +76,10 @@ private slots:
     void on_ShowExpiringMembersByMonth_clicked();
 
     void on_purchases_display_pushButton_clicked();
+
+    void on_members_AllMemberPurchases_pushButton_clicked();
+
+    int i = memberDatabase.length();
 
 private:
     Ui::MainWindow *ui;

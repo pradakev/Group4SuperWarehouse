@@ -46,7 +46,9 @@ double Member::sumPurchasesDate(string date)
 
 void Member::addItem(Item thing)
 {
+    cout << "\n========INSIDE OF ADDITEM========\n";
     itemsBought.push_back(thing);
+    cout << "========ITEM HAS BEEN PUSHED========\n";
 }
 
 /*******************
