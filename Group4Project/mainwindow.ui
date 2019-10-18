@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>11</number>
     </property>
     <widget class="QWidget" name="WelcomePage_0">
      <widget class="QPushButton" name="WelcomeSalesButton">
@@ -1089,14 +1089,63 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="DoneButtonDI">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>520</y>
+        <x>310</x>
+        <y>540</y>
         <width>113</width>
         <height>32</height>
        </rect>
       </property>
       <property name="text">
        <string>Done</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>470</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Input:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="inventory_search_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>500</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inventory_input_lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>470</y>
+        <width>241</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="inventory_searchAll_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>269</x>
+        <y>500</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Search All</string>
       </property>
      </widget>
     </widget>
