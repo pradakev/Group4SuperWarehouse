@@ -7,8 +7,6 @@
 #include "../member.h"
 #include "../container.h"
 
-
-
 using namespace std;
 
 class wholesaleClub
@@ -17,7 +15,7 @@ public:
     wholesaleClub();
     void updateMembers();
     void updateSalesforMembers();
-    void addItemToMember(Item a, string iD);
+    void addItemToMember(const Item& a, string iD);
     void displayMembers();
 
     //REPORTS
@@ -35,8 +33,8 @@ public:
      * */
 
     //Initialize databases
+    //Container<Member> memberDatabase;
     Container<Member> memberDatabase;
-
 };
 
 #endif // WHOLESALECLUB_H

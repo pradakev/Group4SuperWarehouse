@@ -55,6 +55,7 @@ void Member::addItem(const Item& thing)
     itemsBought.push_back(thing);
     cout << "========ITEM HAS BEEN PUSHED========\n";
     totalSpentPreTax += thing.getPrice();
+
 }
 
 /*******************
@@ -115,7 +116,7 @@ ostream& operator<<(ostream& os, const Member& paramMember)
 
 void Member::setMembership(char paramMembership){membership = paramMembership;}
 void Member::setExpiration(string expiration){this->expiration = expiration;}
-//void Member::setTotalSpent(float paramTotal){this->totalSpent = paramTotal;}
+void Member::setTotalSpent(float paramTotal){this->totalSpent = paramTotal;}
 
 //ItemsBoughtContainer
 string Member::allPurchasesReport()
@@ -170,5 +171,4 @@ string Member::rebateAmt(double rebPct)
     {
         cout << "Error. Non-Preferred Member. No Rebates." << endl;
     }
-
 }
