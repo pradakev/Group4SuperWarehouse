@@ -15,29 +15,20 @@ public:
 	* CONSTRUCTOR(S)
 	********************/
 	Item();
-    Item(const Item& right)
-    {
-        name = right.name;
-        totalSalesPrice = right.totalSalesPrice;
-        quantityAvailable = right.quantityAvailable;
-        quantitySold = right.quantitySold;
-        dayBought = right.dayBought;
-    }
 	Item(std::string name, double totalSalesPrice);
     Item(string nName, double nPrice, int nQuantityBought, string nDayBought);
 	Item(std::string name, double totalSalesPrice, 
 		 int quantityAvailable, int quantitySold);
-	/*******************
-	* ACCESSOR(S)
+    Item(const Item& paramItem);
+
+    /*ACCESSOR(S)
 	********************/
-	std::string getName();
-	double getPrice();
-	int getQuantityAvailable();
-	int getQuantitySold();
-    string getDateBought();
+	std::string getName() const;
+	double getPrice() const;
+	int getQuantityAvailable() const;
+	int getQuantitySold() const;
+    string getDateBought() const;
 	
-    string allInfo();
-    
 	/*******************
 	* MUTATOR(S)
 	********************/
@@ -50,9 +41,8 @@ public:
 	* CLASS TEST(S)
 	********************/	
 	// void testItemClass();
-	void outputInfo();
     double operator+(const Item& RHSITEM) const;
-	
+    friend ostream& operator<<(ostream& os, const Item& paramItem);	
 	/*******************
 	* MEMBER DATA
 	********************/

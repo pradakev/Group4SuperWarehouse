@@ -1,31 +1,35 @@
+#include <iostream>
 #include "member.h"
+
+using namespace std;
 
 //Default CTOR
 Member::Member():name("Default Name"), iD("00000"){}
 
-Member::Member(std::string name, std::string iD):name(name), iD(iD)
+Member::Member(string name, string iD):name(name), iD(iD)
 {
 }
 
-Member::Member(std::string paramName,
-                std::string paramId,
-                std::string paramMembership,
-                std::string expiration)
+Member::Member(string paramName,
+                string paramId,
+                string paramMembership,
+                string expiration)
 {
     name = paramName;
     iD = paramId;
     membership = paramMembership;
     this->expiration = expiration;
+    totalSpentPreTax = 0;
 }
 
-Member::Member(std::string paramName,
-                std::string paramId,
-                std::string paramMembership,
-                std::string expiration,
+Member::Member(string paramName,
+                string paramId,
+                string paramMembership,
+                string expiration,
                 float paramTotal)
 {
-
 }
+
 //Sales Accessors
 double Member::sumPurchasesDate(string date)
 {
@@ -44,43 +48,46 @@ double Member::sumPurchasesDate(string date)
 
 }
 
-void Member::addItem(Item thing)
+void Member::addItem(const Item& thing)
 {
-    cout << "Adding item to member's ItemsBought database." << endl;
+    cout << thing << endl;
+
     itemsBought.push_back(thing);
+    cout << "========ITEM HAS BEEN PUSHED========\n";
+    totalSpentPreTax += thing.getPrice();
 }
 
 /*******************
 * ACCESSOR(S)
 ********************/
-std::string Member::getName()
+string Member::getName()
 {
 	return name;
 }
 
-std::string Member::getId()
+string Member::getId()
 {
 	return iD;
 }
 
-void Member::outputMemberInfo()
-{
-    std::cout << "Member Name: " << name << std::endl;
-    std::cout << "Member iD: " << iD << std::endl;
-}
-
-char getMembership();
-std::string getExpiration();
+string Member::getMembership(){return membership;}
+string Member::getExpiration(){return expiration;}
 /*******************
 * MUTATOR(S)
 ********************/
-void Member::setName(std::string paramName)
+void Member::setName(string paramName)
 {
 	name = paramName;
 }
-void Member::setId(std::string paramId)
+
+void Member::setId(string paramId)
 {
 	iD = paramId;
+}
+
+Container<Item> Member::getItems() const
+{
+    return itemsBought;
 }
 
 bool Member::operator<(Member& rhs) const
@@ -92,9 +99,23 @@ bool Member::operator>(Member& rhs) const
 {
     return(stoi(iD) > stoi(rhs.getId()));
 }
-void setMembership(char paramMembership);
-void setExpiration(std::string expiration);
-void setTotalSpent(float paramTotal);
+
+ostream& operator<<(ostream& os, const Member& paramMember)
+{
+    os << "\n========MEMBER OBJECT========\n"
+        << "MEMBER NAME: " << paramMember.name << "\n"
+        << "MEMBER ID: " << paramMember.iD << "\n"
+        << "MEMBERSHIP TYPE: " <<paramMember.membership << "\n"
+        << "EXPIRATION: " << paramMember.expiration << "\n"
+        << "Total Spent: " << paramMember.totalSpentPreTax << "\n"
+        << "ITEMS CONTAINER: \n"
+        << paramMember.itemsBought << "\n"; 
+    return os;
+}
+
+void Member::setMembership(char paramMembership){membership = paramMembership;}
+void Member::setExpiration(string expiration){this->expiration = expiration;}
+//void Member::setTotalSpent(float paramTotal){this->totalSpent = paramTotal;}
 
 //ItemsBoughtContainer
 string Member::allPurchasesReport()
@@ -104,12 +125,50 @@ string Member::allPurchasesReport()
     Container<Item>::Iterator it;
     for(it = itemsBought.begin(); it != itemsBought.end();
         it++)
-    {
-        cout << (*it).allInfo() << endl;
-        ss << (*it).allInfo() << endl;
-    }
+        cout << *it << endl;
+    
     report = ss.str();
-    cout << "report: " << report << endl;
     return report;
+}
+
+string Member::totalSpentWTax(float tax)
+{
+    //Iterate through items bought and add to total
+    float total = 0;
+    Container<Item>::Iterator it;
+    for(it = itemsBought.begin(); it != itemsBought.end(); it++)
+    {
+        total += (*it).getPrice();
+    }
+    total *= tax;
+
+    //SS to convert from float to string
+    stringstream ssTotal;
+    ssTotal << total;
+    //Converted to string
+    string totalSpent(ssTotal.str());
+
+    //return string
+    return totalSpent;
+}
+
+double Member::getTotalSpentPreTax()
+{
+    return totalSpentPreTax;
+}
+
+string Member::rebateAmt(double rebPct)
+{
+    if(membership == "Preferred")
+    {
+        double rebAmt = 0;
+        rebAmt = rebPct * totalSpentPreTax;
+        string rebReport = to_string(rebAmt);
+        return rebReport;
+    }
+    else
+    {
+        cout << "Error. Non-Preferred Member. No Rebates." << endl;
+    }
 
 }

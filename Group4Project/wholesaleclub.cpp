@@ -4,7 +4,7 @@
 
 wholesaleClub::wholesaleClub()
 {
-    //NOTHING
+
 }
 
 void wholesaleClub::updateMembers()
@@ -24,31 +24,68 @@ void wholesaleClub::updateMembers()
     string memberShip;
     string expDate;
 
+    //IMPORTANT NOTE WHEN READING FILE:
+    //The file lines are written so that \r and \n are at the end of each line.
+    //ex:
+    //Sally Shopper
+    //is actually written as:
+    //Sally Shopper\r\n
+
+    //\r and \n are characters that needs to be accounted for.
+    //So the delimiter char for each line is \r, and we need to ignore
+    //the \n in order to correctly store each variable. Now we can correctly
+    //store each string.
+    //SUCCESS! - kZan
+
+    //LINK TO HELPSITE:
+    // https://cboard.cprogramming.com/cplusplus-programmin
+    // g/165621-std-getline-discards-delimiter-when-extracting-characters-stream.html
+
     //Read in a loop until there is nothing to get from the file.
-    while(getline(reader, name, '\n'))
+    while(getline(reader, name, '\r'))
     {
         //Get Info
-        getline(reader, id, '\n');
-
-        getline(reader, memberShip, '\n');
-
-        getline(reader, expDate, '\n');
-
+        reader.ignore(1, '\n');
+        getline(reader, id, '\r');
+        reader.ignore(1, '\n');
+        getline(reader, memberShip, '\r');
+        reader.ignore(1, '\n');
+        getline(reader, expDate, '\r');
+        reader.ignore(1, '\n');
         //Testing
-        cout << "Name: " << name  << "."<< endl;
 //        cout << id << endl;
 //        cout << memberShip << endl;
 //        cout << expDate << endl;
 
         //Add to database
         Member temp(name, id, memberShip, expDate);
-        memberDatabase.push_back(temp);
+        //This needs to be adjusted so that it will occur to not only basic
+        //but so that it will also occur to preferred, on a case by case basis
+        string strPreferred;
+        strPreferred = "Preferred";
+//        strPreferred += "\n";
+
+        //DEBUG STATEMENTS
+        cout << "Storing members!" << endl;
+        cout << "." << memberShip << "..." << endl;
+        if(temp.getMembership() == strPreferred)
+        {
+            cout << temp.getName() << " is a Preferred member." << endl;
+            cout << temp.getMembership() << endl;
+            preferredMemberDatabase.push_back(temp);
+        }
+        else
+        {
+            cout << temp.getName() << " is a Basic member." << endl;
+            cout << temp.getMembership() << endl;
+            basicMemberDatabase.push_back(temp);
+        }
     }
 //    cout << "database size: " << memberDatabase.length();
     //Close file.
     reader.close();
     Container<Member>::Iterator iter;
-    for(iter = memberDatabase.begin(); iter != memberDatabase.end(); iter++)
+    for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
     {
         cout << "NAME:" << (*iter).getName() << endl;
     }
@@ -74,7 +111,7 @@ void wholesaleClub::updateSalesforMembers()
    {
        instream.open(fileNames[i]);
        //CHECK IF FILE OPENED SUCCESSFULY
-       if(instream.fail())
+       if(!instream.fail())
        {
            cout << "File did not open successfully." << endl;
        }
@@ -96,9 +133,7 @@ void wholesaleClub::updateSalesforMembers()
            //convert priceStr & quantityStr to double & int respectively
            price = stod(priceStr);
            quantity = stoi(quantityStr);
-
-           Item *temp = new Item(name, price, quantity, date);
-           addItemToMember(*temp, id);
+           addItemToMember(Item(name, price, quantity, date), id);
        }
        instream.close();
    }
@@ -108,26 +143,20 @@ void wholesaleClub::updateSalesforMembers()
 void wholesaleClub::addItemToMember(Item a, string iD)
 {
     Container<Member>::Iterator it;
-    it = memberDatabase.begin();
+    it = basicMemberDatabase.begin();
 
-    cout << "database size: " << memberDatabase.length() << endl;
-
-    for(it = memberDatabase.begin(); it != memberDatabase.end(); it++)
+    cout << "database size: " << basicMemberDatabase.length();
+    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); it++)
         if ((*it).getId() == iD)
-        {
-            cout << "Adding item to member found!" << endl;
-            cout << "Member to add item to: " << (*it).getName();
             (*it).addItem(a);
-        }
-
 }
 
 
-string wholesaleClub::dateSalesSum(string date)
+string wholesaleClub::dateSalesSum(string date, string membership)
 {
     double totalAgg = 0;
     Container<Member>::Iterator it;
-    for(it = memberDatabase.begin(); it != memberDatabase.end(); it++)
+    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); it++)
         totalAgg += (*it).sumPurchasesDate(date);
     string answer;
 
@@ -143,80 +172,124 @@ void wholesaleClub::displayMembers()
 
     //REMEMBER TO INCLUDE END ITERATOR ITEM OR ELSE WON"T WORK
     Container<Member>::Iterator useMe;
-    for(useMe = memberDatabase.begin(); useMe != memberDatabase.end(); useMe++)
+    for(useMe = basicMemberDatabase.begin(); useMe != basicMemberDatabase.end(); useMe++)
     {
 
         cout << (*useMe).getName() << endl;
     }
-    useMe = memberDatabase.end();
+    useMe = basicMemberDatabase.end();
     cout << (*useMe).getName() << endl;
 
 }
 
 
 
-string wholesaleClub::memberPurchasesReport()
+string wholesaleClub::memberPurchasesReport(string membership)
 {
     string result;
     stringstream myStream;
     Container<Member>::Iterator iter;
     //sort membership
     //memberDatabase.select_sort();
-    myStream  << "ID:" << setw(30) << setfill('_')
-    << "Name:" << setw(30) << setfill('_') << endl;
-    result = myStream.str();
-    for(iter = memberDatabase.begin(); iter != memberDatabase.end(); iter++)
-    {
-        myStream << (*iter).getId() << setw(30) << setfill('.') 
-            << (*iter).getName() << setw(30) << setfill('.');
-        result += myStream.str();
-        //member id, name, membership type
-        //item name, quantity, price
+    if(membership == "basic"){
+        myStream  << "ID:" << setw(30) << setfill('_')
+        << "Name:" << setw(30) << setfill('_') << endl;
+        result = myStream.str();
+        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+        {
+            myStream << (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.');
+            result += myStream.str();
+            //member id, name, membership type
+            //item name, quantity, price
+        }
+        result = myStream.str();
+        cout << result << endl;
+        return result;
     }
-    result = myStream.str();
-    cout << result << endl;
-    return result;
+    else if(membership == "preferred"){
+        myStream  << "ID:" << setw(30) << setfill('_')
+        << "Name:" << setw(30) << setfill('_') << endl;
+        result = myStream.str();
+        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
+        {
+            myStream << (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.');
+            result += myStream.str();
+            //member id, name, membership type
+            //item name, quantity, price
+        }
+        result = myStream.str();
+        cout << result << endl;
+        return result;
+    }
+    else{
+        myStream  << "ID:" << setw(30) << setfill('_')
+        << "Name:" << setw(30) << setfill('_') << endl;
+        result = myStream.str();
+        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
+        {
+            myStream << (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.');
+            result += myStream.str();
+            //member id, name, membership type
+            //item name, quantity, price
+        }
+        result = myStream.str();
+        //cout << result << endl;
+
+        myStream  << "ID:" << setw(30) << setfill('_')
+        << "Name:" << setw(30) << setfill('_') << endl;
+        result = myStream.str();
+        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+        {
+            myStream << (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.');
+            result += myStream.str();
+            //member id, name, membership type
+            //item name, quantity, price
+        }
+        result = myStream.str();
+        cout << result << endl;
+        return result;
+
+    }
 }
 
 
 
 //SALES REPORTS
-string wholesaleClub::totalPurchasesByMember(string id)
+string wholesaleClub::totalPurchasesByMember(string id, string membership)
 {
     string totalPurchases;
     
     Container<Member>::Iterator it;
-    it = memberDatabase.begin();
+    it = basicMemberDatabase.begin();
 
-    for(; it != memberDatabase.end(); it++)
+    for(; it != basicMemberDatabase.end(); it++)
     {
-        //TESTING STRINGS
         cout << (*it).getId() << "." << endl;
         cout << id << "." << endl;
-
-        //COMPARISON
-//        if (id != (*it).getId())
-//        {
-//            cout << "Not Found" << endl;
-//        }
-//        else if (id == (*it).getId())
-        if(id.compare((*it).getId()))
+        if (id != (*it).getId())
+        {
+            cout << "Not Found" << endl;
+        }
+        if (id == (*it).getId())
         {
             cout << "ID Found for total purchases." << endl;
             totalPurchases = (*it).allPurchasesReport();
-            cout << "tP:"<< totalPurchases << endl;
             return totalPurchases;
         }
     }
     return "Member not found.";
 }
 
-string wholesaleClub::memberIdFromName(string name)
+string wholesaleClub::memberIdFromName(string name, string membership)
 {
     string id;
     Container<Member>::Iterator it;
-    it = memberDatabase.begin();
-    for(; it != memberDatabase.end(); it++)
+    it = basicMemberDatabase.begin();
+    for(; it != basicMemberDatabase.end(); it++)
     {
         if((*it).getName() == name)
         {
@@ -227,3 +300,32 @@ string wholesaleClub::memberIdFromName(string name)
     return "Member not found.";
 }
 
+//REBATE REPORT
+string wholesaleClub::rebateReport()
+{
+    cout << "WholeSaleClub Rebate Report" << endl;
+    //REBATE REPORT NEEDS Preferred Members to be sorted
+    preferredMemberDatabase.select_sort();
+
+    //Then Output ID, then member report;
+    double rebatePct = 0.05;
+    string report = "blank report";
+    stringstream ssReport;
+    Container<Member>::Iterator it;
+
+    for(it = preferredMemberDatabase.begin();
+        it != preferredMemberDatabase.end(); it++)
+    {
+        //DEBUG
+        cout << (*it).getId() << endl;
+        cout << (*it).rebateAmt(rebatePct) << endl;
+        cout << endl;
+
+        ssReport << (*it).getId() << endl;
+        ssReport << (*it).rebateAmt(rebatePct) << endl;
+        ssReport << endl;
+    }
+    string strReport = ssReport.str();
+    return strReport;
+
+}
