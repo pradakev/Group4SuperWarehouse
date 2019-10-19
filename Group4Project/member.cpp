@@ -36,7 +36,7 @@ double Member::sumPurchasesDate(string date)
     double total = 0;
     Container<Item>::Iterator it;
     for(it = itemsBought.begin(); it != itemsBought.end();
-        it++)
+        ++it)
     {
         if((*it).getDateBought() == date)
         {
@@ -55,7 +55,6 @@ void Member::addItem(const Item& thing)
     itemsBought.push_back(thing);
     cout << "========ITEM HAS BEEN PUSHED========\n";
     totalSpentPreTax += thing.getPrice();
-
 }
 
 /*******************
@@ -116,7 +115,7 @@ ostream& operator<<(ostream& os, const Member& paramMember)
 
 void Member::setMembership(char paramMembership){membership = paramMembership;}
 void Member::setExpiration(string expiration){this->expiration = expiration;}
-void Member::setTotalSpent(float paramTotal){this->totalSpent = paramTotal;}
+//void Member::setTotalSpent(float paramTotal){this->totalSpent = paramTotal;}
 
 //ItemsBoughtContainer
 string Member::allPurchasesReport()
@@ -125,7 +124,7 @@ string Member::allPurchasesReport()
     stringstream ss;
     Container<Item>::Iterator it;
     for(it = itemsBought.begin(); it != itemsBought.end();
-        it++)
+        ++it)
         cout << *it << endl;
     
     report = ss.str();
@@ -137,7 +136,7 @@ string Member::totalSpentWTax(float tax)
     //Iterate through items bought and add to total
     float total = 0;
     Container<Item>::Iterator it;
-    for(it = itemsBought.begin(); it != itemsBought.end(); it++)
+    for(it = itemsBought.begin(); it != itemsBought.end(); ++it)
     {
         total += (*it).getPrice();
     }
@@ -170,5 +169,7 @@ string Member::rebateAmt(double rebPct)
     else
     {
         cout << "Error. Non-Preferred Member. No Rebates." << endl;
+        return "Error. Non-Preferred Member. No Rebates.";
     }
+
 }

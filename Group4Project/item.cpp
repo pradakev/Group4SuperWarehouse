@@ -37,7 +37,8 @@ Item::Item(std::string name, double totalSalesPrice):name(name), totalSalesPrice
  * POSTCONDITIONS
  *  A charStack object is created
  ******************************************************************************/
-Item::Item(std::string name, double totalSalesPrice, int quantityAvailable, int quantitySold):name(name), totalSalesPrice(totalSalesPrice), quantityAvailable(quantityAvailable), quantitySold(quantitySold)
+Item::Item(std::string name, double totalSalesPrice, int quantityAvailable, int quantitySold):
+    name(name), totalSalesPrice(totalSalesPrice), quantityAvailable(quantityAvailable), quantitySold(quantitySold)
 {cout << "\n========INSIDE CONSTRUCTOR 3========\n";
 }
 
@@ -185,7 +186,7 @@ ostream& operator<<(ostream& os, const Item& paramItem)
     os << "\n========ITEM OBJECT========\n"
         << "++NAME: " << paramItem.name << "\n"
         << "++TOTAL SALES PRICE: " << paramItem.totalSalesPrice << "\n"
-        << "++QTY: " << paramItem.quantityAvailable << "\n"
+//        << "++QTY: " << paramItem.quantityAvailable << "\n"
         << "++SOLD: " << paramItem.quantitySold << "\n"
         << "++DATE BOUGHT: " << paramItem.dayBought << "\n"
         << "==============================\n";

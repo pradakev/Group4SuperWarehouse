@@ -45,6 +45,12 @@ RESOURCES += \
     forLogos.qrc
 
 DISTFILES += \
+    ../build-Group4Project-Desktop_Qt_5_13_1_clang_64bit-Debug/day1.txt \
+    ../build-Group4Project-Desktop_Qt_5_13_1_clang_64bit-Debug/day2.txt \
+    ../build-Group4Project-Desktop_Qt_5_13_1_clang_64bit-Debug/day3.txt \
+    ../build-Group4Project-Desktop_Qt_5_13_1_clang_64bit-Debug/day4.txt \
+    ../build-Group4Project-Desktop_Qt_5_13_1_clang_64bit-Debug/day5.txt \
+    ../build-Group4Project-Desktop_Qt_5_13_1_clang_64bit-Debug/warehouse shoppers.txt \
     DaySalesTxtFiles/day1.txt \
     DaySalesTxtFiles/day2.txt \
     DaySalesTxtFiles/day3.txt \

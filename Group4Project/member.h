@@ -72,9 +72,9 @@ public:
 private:
 	string name;		//IN OUT - Name of Member
 	string iD;			//IN OUT - iD of Member
-  string membership;		//IN OUT - membership type 'b'or 'p'
+    string membership;		//IN OUT - membership type 'b'or 'p'
 	string expiration;		//IN OUT - expiration date mm/dd/yyyy
-  double totalSpentPreTax;		//IN OUT - total spent before tax
+    double totalSpentPreTax;		//IN OUT - total spent before tax
 
     //Added
     Container<Item> itemsBought;

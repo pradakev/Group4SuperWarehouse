@@ -53,9 +53,10 @@ void wholesaleClub::updateMembers()
         getline(reader, expDate, '\r');
         reader.ignore(1, '\n');
         //Testing
-//        cout << id << endl;
-//        cout << memberShip << endl;
-//        cout << expDate << endl;
+        cout << name << "." << endl;
+        cout << id << "."<< endl;
+        cout << memberShip << "."<< endl;
+        cout << expDate << "."<< endl;
 
         //Add to database
         Member temp(name, id, memberShip, expDate);
@@ -63,7 +64,6 @@ void wholesaleClub::updateMembers()
         //but so that it will also occur to preferred, on a case by case basis
         string strPreferred;
         strPreferred = "Preferred";
-//        strPreferred += "\n";
 
         //DEBUG STATEMENTS
         cout << "Storing members!" << endl;
@@ -85,10 +85,17 @@ void wholesaleClub::updateMembers()
     //Close file.
     reader.close();
     Container<Member>::Iterator iter;
-    for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+    for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); ++iter)
     {
-        cout << "NAME:" << (*iter).getName() << endl;
+        cout << "BASIC MEMBER NAME:" << (*iter).getName() << endl;
     }
+    cout << "BASIC MEMBER NAME:" << (*iter).getName() << endl;
+
+    for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); ++iter)
+    {
+        cout << "PREFERRED MEMBER NAME:" << (*iter).getName() << endl;
+    }
+    cout << "PREFERRED MEMBER NAME:" << (*iter).getName() << endl;
 }
 
 void wholesaleClub::updateSalesforMembers()
@@ -111,25 +118,33 @@ void wholesaleClub::updateSalesforMembers()
    {
        instream.open(fileNames[i]);
        //CHECK IF FILE OPENED SUCCESSFULY
-       if(!instream.fail())
+       if(instream.fail())
        {
            cout << "File did not open successfully." << endl;
        }
        else
        {
+           cout << "========================================" << endl;
            cout << "File opened with success: " << fileNames[i] << endl;
+           cout << "========================================" << endl;
        }
-       while(getline(instream, date))
+       while(getline(instream, date, '\r'))
        {
-           getline(instream, id);
-           getline(instream, name);
+           instream.ignore(1, '\n');
+           getline(instream, id, '\r');
+           instream.ignore(1, '\n');
+           getline(instream, name, '\r');
+           instream.ignore(1, '\n');
            getline(instream, priceStr, '\t');
-           getline(instream, quantityStr);
-           cout << "date: " << date << endl;
-           cout << "id: " << id << endl;
-           cout << "name: " << name << endl;
-           cout << "price: " << priceStr << endl;
-           cout << "quantity: " << quantityStr << endl;
+           getline(instream, quantityStr, '\r');
+           instream.ignore(1, '\n');
+           cout << endl;
+           cout << "debug: Reading items." << endl;
+           cout << "date: " << date << "." << endl;
+           cout << "id: " << id << "." << endl;
+           cout << "name: " << name << "." << endl;
+           cout << "price: " << priceStr << "." << endl;
+           cout << "quantity: " << quantityStr << "." << endl;
            //convert priceStr & quantityStr to double & int respectively
            price = stod(priceStr);
            quantity = stoi(quantityStr);
@@ -142,13 +157,56 @@ void wholesaleClub::updateSalesforMembers()
 
 void wholesaleClub::addItemToMember(Item a, string iD)
 {
+    //BASIC MEMBERS
     Container<Member>::Iterator it;
     it = basicMemberDatabase.begin();
 
-    cout << "database size: " << basicMemberDatabase.length();
-    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); it++)
+    cout << "database size: " << basicMemberDatabase.length() << endl;
+    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); ++it)
+    {
         if ((*it).getId() == iD)
+        {
+            cout << (*it).getName() << " is " << (*it).getMembership() << endl;
+            cout << "Pushing to basic member itemsBought" << endl;
             (*it).addItem(a);
+            return;
+
+        }
+    }
+    if ((*it).getId() == iD)
+    {
+        cout << (*it).getName() << " is " << (*it).getMembership() << endl;
+        cout << "Pushing to basic member itemsBought" << endl;
+        (*it).addItem(a);
+        return;
+
+    }
+
+    //PREFERRED MEMBERS
+    Container<Member>::Iterator it2;
+
+    cout << "database size: " << preferredMemberDatabase.length() << endl;
+    for(it2 = preferredMemberDatabase.begin(); it2 != preferredMemberDatabase.end(); ++it2)
+    {
+        if ((*it2).getId() == iD)
+        {
+            cout << (*it2).getName() << " is " << (*it2).getMembership() << endl;
+            cout << "Pushing to preferred member itemsBought" << endl;
+            (*it2).addItem(a);
+            return;
+
+        }
+    }
+    if ((*it2).getId() == iD)
+    {
+        cout << (*it2).getName() << " is " << (*it2).getMembership() << endl;
+        cout << "Pushing to preferred member itemsBought" << endl;
+        (*it2).addItem(a);
+        return;
+
+    }
+
+    cout << "ID NOT FOUND" << endl;
 }
 
 
@@ -156,7 +214,7 @@ string wholesaleClub::dateSalesSum(string date, string membership)
 {
     double totalAgg = 0;
     Container<Member>::Iterator it;
-    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); it++)
+    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); ++it)
         totalAgg += (*it).sumPurchasesDate(date);
     string answer;
 
@@ -172,7 +230,7 @@ void wholesaleClub::displayMembers()
 
     //REMEMBER TO INCLUDE END ITERATOR ITEM OR ELSE WON"T WORK
     Container<Member>::Iterator useMe;
-    for(useMe = basicMemberDatabase.begin(); useMe != basicMemberDatabase.end(); useMe++)
+    for(useMe = basicMemberDatabase.begin(); useMe != basicMemberDatabase.end(); ++useMe)
     {
 
         cout << (*useMe).getName() << endl;
@@ -195,7 +253,7 @@ string wholesaleClub::memberPurchasesReport(string membership)
         myStream  << "ID:" << setw(30) << setfill('_')
         << "Name:" << setw(30) << setfill('_') << endl;
         result = myStream.str();
-        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); ++iter)
         {
             myStream << (*iter).getId() << setw(30) << setfill('.')
                 << (*iter).getName() << setw(30) << setfill('.');
@@ -211,7 +269,7 @@ string wholesaleClub::memberPurchasesReport(string membership)
         myStream  << "ID:" << setw(30) << setfill('_')
         << "Name:" << setw(30) << setfill('_') << endl;
         result = myStream.str();
-        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
+        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); ++iter)
         {
             myStream << (*iter).getId() << setw(30) << setfill('.')
                 << (*iter).getName() << setw(30) << setfill('.');
@@ -227,7 +285,7 @@ string wholesaleClub::memberPurchasesReport(string membership)
         myStream  << "ID:" << setw(30) << setfill('_')
         << "Name:" << setw(30) << setfill('_') << endl;
         result = myStream.str();
-        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
+        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); ++iter)
         {
             myStream << (*iter).getId() << setw(30) << setfill('.')
                 << (*iter).getName() << setw(30) << setfill('.');
@@ -241,7 +299,7 @@ string wholesaleClub::memberPurchasesReport(string membership)
         myStream  << "ID:" << setw(30) << setfill('_')
         << "Name:" << setw(30) << setfill('_') << endl;
         result = myStream.str();
-        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); ++iter)
         {
             myStream << (*iter).getId() << setw(30) << setfill('.')
                 << (*iter).getName() << setw(30) << setfill('.');
@@ -266,7 +324,7 @@ string wholesaleClub::totalPurchasesByMember(string id, string membership)
     Container<Member>::Iterator it;
     it = basicMemberDatabase.begin();
 
-    for(; it != basicMemberDatabase.end(); it++)
+    for(; it != basicMemberDatabase.end(); ++it)
     {
         cout << (*it).getId() << "." << endl;
         cout << id << "." << endl;
@@ -289,7 +347,7 @@ string wholesaleClub::memberIdFromName(string name, string membership)
     string id;
     Container<Member>::Iterator it;
     it = basicMemberDatabase.begin();
-    for(; it != basicMemberDatabase.end(); it++)
+    for(; it != basicMemberDatabase.end(); ++it)
     {
         if((*it).getName() == name)
         {
@@ -314,17 +372,27 @@ string wholesaleClub::rebateReport()
     Container<Member>::Iterator it;
 
     for(it = preferredMemberDatabase.begin();
-        it != preferredMemberDatabase.end(); it++)
+        it != preferredMemberDatabase.end(); ++it)
     {
         //DEBUG
         cout << (*it).getId() << endl;
         cout << (*it).rebateAmt(rebatePct) << endl;
         cout << endl;
 
-        ssReport << (*it).getId() << endl;
-        ssReport << (*it).rebateAmt(rebatePct) << endl;
+        ssReport << "Name: "<< (*it).getName() << endl;
+        ssReport << "ID: "<< (*it).getId() << endl;
+        ssReport << "Total Spent PreTax: $"<<(*it).getTotalSpentPreTax() << endl;
+        ssReport << "Rebate Amount: $" << (*it).rebateAmt(rebatePct) << endl;
         ssReport << endl;
     }
+
+    //ITERATOR DOESNT REACH END. THIS IS END.
+    ssReport << "Name: "<< (*it).getName() << endl;
+    ssReport << "ID: "<< (*it).getId() << endl;
+    ssReport << "Total Spent PreTax: $"<<(*it).getTotalSpentPreTax() << endl;
+    ssReport << "Rebate Amount: $" << (*it).rebateAmt(rebatePct) << endl;
+    ssReport << endl;
+
     string strReport = ssReport.str();
     return strReport;
 

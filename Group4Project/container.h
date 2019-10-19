@@ -43,9 +43,12 @@ public:
      	***** Overloaded Operators *****
      	********************************/
         O& operator*();
-        Iterator operator++(int n);
+//        Iterator operator++(int n);
         bool operator!=(const Iterator &right) const;
         bool operator==(const Iterator &right) const;
+
+        //KEVIN TEST PREFIX
+        Iterator operator++();
     };
 
     /********************************
@@ -174,6 +177,11 @@ typename Container<O>::Iterator Container<O>::begin()
 template <typename O>
 typename Container<O>::Iterator Container<O>::end()
 {
+    if(tail == NULL)
+    {
+        return Iterator(tail);
+    }
+
     return Iterator(tail);
 }
 
@@ -450,12 +458,12 @@ O& Container<O>::Iterator::operator*()
 * POST-CONDITIONS
 *   An Iterator object is returned pointing to the neighbouring node.
 **************************************************************************/
-template<typename O>
-typename Container<O>::Iterator Container<O>::Iterator::operator++(int n)
-{
-    current = current->next;
-    return Iterator(current);
-}
+//template<typename O>
+//typename Container<O>::Iterator Container<O>::Iterator::operator++(int n)
+//{
+//    current = current->next;
+//    return Iterator(current);
+//}
 
 template<typename O>
 ostream& operator<<(ostream& os, const Container<O>& paramCont)
@@ -482,6 +490,13 @@ template<typename O>
 bool Container<O>::Iterator::operator !=(const Iterator& right) const
 {
     return(current!=right.current);
+}
+
+template<typename O>
+typename Container<O>::Iterator Container<O>::Iterator::operator++()
+{
+    current = current->next;
+    return Iterator(current);
 }
 #endif // CONTAINER_H
 
