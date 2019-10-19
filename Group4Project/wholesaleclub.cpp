@@ -24,16 +24,35 @@ void wholesaleClub::updateMembers()
     string memberShip;
     string expDate;
 
+    //IMPORTANT NOTE WHEN READING FILE:
+    //The file lines are written so that \r and \n are at the end of each line.
+    //ex:
+    //Sally Shopper
+    //is actually written as:
+    //Sally Shopper\r\n
+
+    //\r and \n are characters that needs to be accounted for.
+    //So the delimiter char for each line is \r, and we need to ignore
+    //the \n in order to correctly store each variable. Now we can correctly
+    //store each string.
+    //SUCCESS! - kZan
+
+    //LINK TO HELPSITE:
+    // https://cboard.cprogramming.com/cplusplus-programmin
+    // g/165621-std-getline-discards-delimiter-when-extracting-characters-stream.html
+
     //Read in a loop until there is nothing to get from the file.
-    while(getline(reader, name, '\n'))
+    while(getline(reader, name, '\r'))
     {
         //Get Info
-        getline(reader, id, '\n');
-        getline(reader, memberShip, '\n');
-        getline(reader, expDate, '\n');
-
+        reader.ignore(1, '\n');
+        getline(reader, id, '\r');
+        reader.ignore(1, '\n');
+        getline(reader, memberShip, '\r');
+        reader.ignore(1, '\n');
+        getline(reader, expDate, '\r');
+        reader.ignore(1, '\n');
         //Testing
-        cout << "Name: " << name  << "."<< endl;
 //        cout << id << endl;
 //        cout << memberShip << endl;
 //        cout << expDate << endl;
@@ -42,7 +61,25 @@ void wholesaleClub::updateMembers()
         Member temp(name, id, memberShip, expDate);
         //This needs to be adjusted so that it will occur to not only basic
         //but so that it will also occur to preferred, on a case by case basis
-        basicMemberDatabase.push_back(temp);
+        string strPreferred;
+        strPreferred = "Preferred";
+//        strPreferred += "\n";
+
+        //DEBUG STATEMENTS
+        cout << "Storing members!" << endl;
+        cout << "." << memberShip << "..." << endl;
+        if(temp.getMembership() == strPreferred)
+        {
+            cout << temp.getName() << " is a Preferred member." << endl;
+            cout << temp.getMembership() << endl;
+            preferredMemberDatabase.push_back(temp);
+        }
+        else
+        {
+            cout << temp.getName() << " is a Basic member." << endl;
+            cout << temp.getMembership() << endl;
+            basicMemberDatabase.push_back(temp);
+        }
     }
 //    cout << "database size: " << memberDatabase.length();
     //Close file.
@@ -263,3 +300,32 @@ string wholesaleClub::memberIdFromName(string name, string membership)
     return "Member not found.";
 }
 
+//REBATE REPORT
+string wholesaleClub::rebateReport()
+{
+    cout << "WholeSaleClub Rebate Report" << endl;
+    //REBATE REPORT NEEDS Preferred Members to be sorted
+    preferredMemberDatabase.select_sort();
+
+    //Then Output ID, then member report;
+    double rebatePct = 0.05;
+    string report = "blank report";
+    stringstream ssReport;
+    Container<Member>::Iterator it;
+
+    for(it = preferredMemberDatabase.begin();
+        it != preferredMemberDatabase.end(); it++)
+    {
+        //DEBUG
+        cout << (*it).getId() << endl;
+        cout << (*it).rebateAmt(rebatePct) << endl;
+        cout << endl;
+
+        ssReport << (*it).getId() << endl;
+        ssReport << (*it).rebateAmt(rebatePct) << endl;
+        ssReport << endl;
+    }
+    string strReport = ssReport.str();
+    return strReport;
+
+}

@@ -50,6 +50,11 @@ public:
     //ItemsBought Container
     void addItem(const Item& thing);
     string allPurchasesReport();
+
+    //REBATE
+    string totalSpentWTax(float tax);
+    double getTotalSpentPreTax();
+    string rebateAmt(double rebPct);
 	
 	/*******************
 	* MUTATOR(S)
@@ -67,9 +72,9 @@ public:
 private:
 	string name;		//IN OUT - Name of Member
 	string iD;			//IN OUT - iD of Member
-    string membership;		//IN OUT - membership type 'b'or 'p'
+  string membership;		//IN OUT - membership type 'b'or 'p'
 	string expiration;		//IN OUT - expiration date mm/dd/yyyy
-	float totalSpent;		//IN OUT - total spent
+  double totalSpentPreTax;		//IN OUT - total spent before tax
 
     //Added
     Container<Item> itemsBought;

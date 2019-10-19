@@ -19,6 +19,7 @@ Member::Member(string paramName,
     iD = paramId;
     membership = paramMembership;
     this->expiration = expiration;
+    totalSpentPreTax = 0;
 }
 
 Member::Member(string paramName,
@@ -53,6 +54,8 @@ void Member::addItem(const Item& thing)
 
     itemsBought.push_back(thing);
     cout << "========ITEM HAS BEEN PUSHED========\n";
+    totalSpentPreTax += thing.getPrice();
+
 }
 
 /*******************
@@ -105,7 +108,7 @@ ostream& operator<<(ostream& os, const Member& paramMember)
         << "MEMBER ID: " << paramMember.iD << "\n"
         << "MEMBERSHIP TYPE: " <<paramMember.membership << "\n"
         << "EXPIRATION: " << paramMember.expiration << "\n"
-        << "Total Spent: " << paramMember.totalSpent << "\n"
+        << "Total Spent: " << paramMember.totalSpentPreTax << "\n"
         << "ITEMS CONTAINER: \n"
         << paramMember.itemsBought << "\n"; 
     return os;
@@ -127,4 +130,45 @@ string Member::allPurchasesReport()
     
     report = ss.str();
     return report;
+}
+
+string Member::totalSpentWTax(float tax)
+{
+    //Iterate through items bought and add to total
+    float total = 0;
+    Container<Item>::Iterator it;
+    for(it = itemsBought.begin(); it != itemsBought.end(); it++)
+    {
+        total += (*it).getPrice();
+    }
+    total *= tax;
+
+    //SS to convert from float to string
+    stringstream ssTotal;
+    ssTotal << total;
+    //Converted to string
+    string totalSpent(ssTotal.str());
+
+    //return string
+    return totalSpent;
+}
+
+double Member::getTotalSpentPreTax()
+{
+    return totalSpentPreTax;
+}
+
+string Member::rebateAmt(double rebPct)
+{
+    if(membership == "Preferred")
+    {
+        double rebAmt = 0;
+        rebAmt = rebPct * totalSpentPreTax;
+        string rebReport = to_string(rebAmt);
+        return rebReport;
+    }
+    else
+    {
+        cout << "Error. Non-Preferred Member. No Rebates." << endl;
+    }
 }

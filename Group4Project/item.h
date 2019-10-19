@@ -21,7 +21,8 @@ public:
 		 int quantityAvailable, int quantitySold);
     Item(const Item& paramItem);
 
-	* ACCESSOR(S)
+    /*ACCESSOR(S)
+
 	********************/
 	std::string getName() const;
 	double getPrice() const;

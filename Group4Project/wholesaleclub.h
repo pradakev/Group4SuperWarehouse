@@ -28,6 +28,8 @@ public:
     string totalPurchasesByMember(string id, string membership);
     string memberIdFromName(string name, string membership);
 
+    //REBATES
+    string rebateReport();  //MEMBERS ONLY
     /*REQ. #2
      * A user should be able to enter
      * a membership number or name and

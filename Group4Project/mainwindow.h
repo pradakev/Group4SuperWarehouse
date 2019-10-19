@@ -83,6 +83,8 @@ private slots:
 
     void on_inventory_searchAll_pushButton_clicked();
 
+    void on_allPreferredMemberRebatesButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     wholesaleClub myClub;
