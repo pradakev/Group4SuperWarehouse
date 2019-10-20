@@ -76,6 +76,7 @@ ui->stackedWidget->setCurrentIndex(pg);
 
 void MainWindow::on_WelcomeSalesButton_clicked()
 {
+    //This exists.
     goToPage(2);
 }
 
@@ -177,6 +178,7 @@ void MainWindow::on_WelcomeDisplayInventoryButton_clicked()
 void MainWindow::on_DoneButtonDI_clicked()
 {
     goToPage(0);
+
 }
 
 void MainWindow::on_doneItemSalesButton_clicked()
