@@ -193,15 +193,14 @@ string wholesaleClub::memberPurchasesReport(string membership)
     //memberDatabase.select_sort();
     if(membership == "basic"){
         myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_') << endl;
+        << "Name:" << setw(30) << setfill('_');
         result = myStream.str();
         for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
         {
-            myStream << (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.');
+            myStream << "\n" << (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.')
+                << (*iter).getItems() << "\n";
             result += myStream.str();
-            //member id, name, membership type
-            //item name, quantity, price
         }
         result = myStream.str();
         cout << result << endl;
@@ -209,12 +208,13 @@ string wholesaleClub::memberPurchasesReport(string membership)
     }
     else if(membership == "preferred"){
         myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_') << endl;
+        << "Name:" << setw(30) << setfill('_');
         result = myStream.str();
         for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
         {
-            myStream << (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.');
+            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.')
+                << (*iter).getItems() << "\n";
             result += myStream.str();
             //member id, name, membership type
             //item name, quantity, price
@@ -223,14 +223,15 @@ string wholesaleClub::memberPurchasesReport(string membership)
         cout << result << endl;
         return result;
     }
-    else{
+    else{   //Print both memberships
         myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_') << endl;
+        << "Name:" << setw(30) << setfill('_');
         result = myStream.str();
         for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
         {
-            myStream << (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.');
+            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.')
+                << (*iter).getItems() << "\n";
             result += myStream.str();
             //member id, name, membership type
             //item name, quantity, price
@@ -239,12 +240,13 @@ string wholesaleClub::memberPurchasesReport(string membership)
         //cout << result << endl;
 
         myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_') << endl;
+        << "Name:" << setw(30) << setfill('_');
         result = myStream.str();
         for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
         {
-            myStream << (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.');
+            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
+                << (*iter).getName() << setw(30) << setfill('.')
+                << (*iter).getItems() << "\n";
             result += myStream.str();
             //member id, name, membership type
             //item name, quantity, price
@@ -328,4 +330,26 @@ string wholesaleClub::rebateReport()
     string strReport = ssReport.str();
     return strReport;
 
+}
+
+//Membership Expiration Report
+//User inputs a month number and we display all the
+//memberships that expire on that month.
+string wholesaleClub::membershipExpirationReport(int month)
+{
+    Container<Member>::Iterator iter;
+    stringstream report;
+    iter = basicMemberDatabase.begin();
+    string monthStored;
+
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
+        monthStored = (*iter).getExpiration()[0];
+        monthStored += (*iter).getExpiration()[1];
+        iter++;
+        if(stoi(monthStored) == month)
+            report << (*iter).getName() << " - " << (*iter).getExpiration() << endl;
+    }
+    //cout << report.str();
+    return report.str();
 }

@@ -24,9 +24,9 @@ public:
 
     string memberPurchasesReport(string membership);
     string dateSalesSum(string date, string membership);
-
     string totalPurchasesByMember(string id, string membership);
     string memberIdFromName(string name, string membership);
+    string membershipExpirationReport(int month);
 
     //REBATES
     string rebateReport();  //MEMBERS ONLY

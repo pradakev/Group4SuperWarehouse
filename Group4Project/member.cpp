@@ -116,7 +116,7 @@ ostream& operator<<(ostream& os, const Member& paramMember)
 
 void Member::setMembership(char paramMembership){membership = paramMembership;}
 void Member::setExpiration(string expiration){this->expiration = expiration;}
-void Member::setTotalSpent(float paramTotal){this->totalSpent = paramTotal;}
+void Member::setTotalSpent(float paramTotal){this->totalSpentPreTax = paramTotal;}
 
 //ItemsBoughtContainer
 string Member::allPurchasesReport()
