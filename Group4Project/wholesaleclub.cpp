@@ -84,11 +84,30 @@ void wholesaleClub::updateMembers()
 //    cout << "database size: " << memberDatabase.length();
     //Close file.
     reader.close();
-    Container<Member>::Iterator iter;
-    for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+    Container<Member>::Iterator iter = basicMemberDatabase.begin();
+    //NOTE: We are using a new form of a FOR LOOP. The old form is commented,
+    //New form is used below!
+
+//    for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+//    {
+//        cout << "NAME:" << (*iter).getName() << endl;
+//    }
+    cout << "BASIC:" << endl;
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
     {
-        cout << "NAME:" << (*iter).getName() << endl;
+        cout << "NAME:-" << (*iter).getName() << "-" << endl;
+        iter++;
     }
+    cout << endl;
+    cout << "PREFERRED:" << endl;
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        cout << "NAME:-" << (*iter).getName() << "-"<< endl;
+        iter++;
+    }
+
+
 }
 
 void wholesaleClub::updateSalesforMembers()
@@ -111,7 +130,7 @@ void wholesaleClub::updateSalesforMembers()
    {
        instream.open(fileNames[i]);
        //CHECK IF FILE OPENED SUCCESSFULY
-       if(!instream.fail())
+       if(instream.fail())
        {
            cout << "File did not open successfully." << endl;
        }
@@ -119,12 +138,17 @@ void wholesaleClub::updateSalesforMembers()
        {
            cout << "File opened with success: " << fileNames[i] << endl;
        }
-       while(getline(instream, date))
+       while(getline(instream, date, '\r'))
        {
-           getline(instream, id);
-           getline(instream, name);
+           instream.ignore(1, '\n');
+           getline(instream, id, '\r');
+           instream.ignore(1, '\n');
+           getline(instream, name, '\r');
+           instream.ignore(1, '\n');
            getline(instream, priceStr, '\t');
-           getline(instream, quantityStr);
+           getline(instream, quantityStr, '\r');
+           instream.ignore(1, '\n');
+
            cout << "date: " << date << endl;
            cout << "id: " << id << endl;
            cout << "name: " << name << endl;
@@ -145,10 +169,32 @@ void wholesaleClub::addItemToMember(Item a, string iD)
     Container<Member>::Iterator it;
     it = basicMemberDatabase.begin();
 
-    cout << "database size: " << basicMemberDatabase.length();
-    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); it++)
+    //DEBUG statement
+    cout << "basic member database size: " << basicMemberDatabase.length() << endl;
+
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
         if ((*it).getId() == iD)
+        {
             (*it).addItem(a);
+            return;
+        }
+        it++;
+    }
+
+    it = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        if ((*it).getId() == iD)
+        {
+            (*it).addItem(a);
+            return;
+        }
+        it++;
+    }
+
+    cout << "ID NOT FOUND WHEN ADDING ITEM TO MEMBER" << endl;
+
 }
 
 
@@ -311,19 +357,24 @@ string wholesaleClub::rebateReport()
     double rebatePct = 0.05;
     string report = "blank report";
     stringstream ssReport;
-    Container<Member>::Iterator it;
+    Container<Member>::Iterator it = preferredMemberDatabase.begin();
 
-    for(it = preferredMemberDatabase.begin();
-        it != preferredMemberDatabase.end(); it++)
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
     {
         //DEBUG
-        cout << (*it).getId() << endl;
-        cout << (*it).rebateAmt(rebatePct) << endl;
+        cout << "NAME: " << (*it).getName() << endl;
+        cout << "ID:"<< (*it).getId() << endl;
+        cout << "TOTAL SPENT: $" <<(*it).getTotalSpentPreTax() << endl;
+        cout << "REBATE AMT: $" << (*it).rebateAmt(rebatePct) << endl;
         cout << endl;
 
-        ssReport << (*it).getId() << endl;
-        ssReport << (*it).rebateAmt(rebatePct) << endl;
+        ssReport << "NAME: "<< (*it).getName() << endl;
+        ssReport << "ID:" << (*it).getId() << endl;
+        ssReport << "TOTAL SPENT: $"<< (*it).getTotalSpentPreTax() << endl;
+        ssReport << "REBATE AMT: $" << (*it).rebateAmt(rebatePct) << endl;
         ssReport << endl;
+
+        it++;
     }
     string strReport = ssReport.str();
     return strReport;

@@ -25,11 +25,11 @@ public:
             string paramMembership,
             string expiration);
 
-	Member(string paramName,
-		string paramId,
-        string paramMembership,
-		string expiration,
-		float paramTotal);
+//	Member(string paramName,
+//		string paramId,
+//        string paramMembership,
+//		string expiration,
+//		float paramTotal);
     /*******************
 	* ACCESSOR(S)
 	********************/

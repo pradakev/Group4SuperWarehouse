@@ -22,13 +22,14 @@ Member::Member(string paramName,
     totalSpentPreTax = 0;
 }
 
-Member::Member(string paramName,
-                string paramId,
-                string paramMembership,
-                string expiration,
-                float paramTotal)
-{
-}
+//Member::Member(string paramName,
+//                string paramId,
+//                string paramMembership,
+//                string expiration,
+//                float paramTotal)
+//{
+
+//}
 
 //Sales Accessors
 double Member::sumPurchasesDate(string date)
@@ -116,7 +117,7 @@ ostream& operator<<(ostream& os, const Member& paramMember)
 
 void Member::setMembership(char paramMembership){membership = paramMembership;}
 void Member::setExpiration(string expiration){this->expiration = expiration;}
-void Member::setTotalSpent(float paramTotal){this->totalSpent = paramTotal;}
+void Member::setTotalSpent(float paramTotal){this->totalSpentPreTax = paramTotal;}
 
 //ItemsBoughtContainer
 string Member::allPurchasesReport()
