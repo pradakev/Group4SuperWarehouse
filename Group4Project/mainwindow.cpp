@@ -69,62 +69,172 @@ void MainWindow::on_MemberPurchases_Button_clicked()
 //    //Now send Qstring to textBrowser
 //    ui->OutputMembersText->setText(qMemberPurchases);
 }
-
+/**************************************************************************
+* Mutator goToPage(int pg)
+*__________________________________________________________________________
+* changes the ui to the passed in page index
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   a page index passed in
+* POST-CONDITIONS:
+*   No Return
+*   changes the GUI to the appropriate index
+**************************************************************************/
 void MainWindow::goToPage(int pg){
 ui->stackedWidget->setCurrentIndex(pg);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the sales home page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Sales Home Page
+**************************************************************************/
 void MainWindow::on_WelcomeSalesButton_clicked()
 {
     goToPage(2);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to Home Page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Home Page
+**************************************************************************/
 void MainWindow::on_pushButton_SalesReportDone_clicked()
 {
     goToPage(0);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the Daily Report page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Daily Report Page
+**************************************************************************/
 void MainWindow::on_pushButton_dailyReport_clicked()
 {
     goToPage(4);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the Members Page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Members Page
+**************************************************************************/
 void MainWindow::on_WelcomeMembersButton_clicked()
 {
     goToPage(1);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the Home Page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Home Page
+**************************************************************************/
 void MainWindow::on_DoneMembersButton_clicked()
 {
     ui->OutputMembersText->setText("Choose an option below.");
     goToPage(0);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the sales home page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Sales Home Page
+**************************************************************************/
 void MainWindow::on_dailyReportPushButton_clicked()
 {
     goToPage(2);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the sales home page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Sales Home Page
+**************************************************************************/
 void MainWindow::on_purchases_done_pushButton_clicked()
 {
     goToPage(2);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the Purchases Page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Purchases Page
+**************************************************************************/
 void MainWindow::on_pushButton_memberPurchasesReport_clicked()
 {
     goToPage(3);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the Custom Report Page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Custom Report Page
+**************************************************************************/
 void MainWindow::on_pushButton_customReportOptions_clicked()
 {
     goToPage(10);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the GUI to the sales home page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Sales Home Page
+**************************************************************************/
 void MainWindow::on_pushButton_3_clicked()
 {
     goToPage(2);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Displays the inventory
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Inventory Display Page, and displays
+*   the entire inventory in the Iventroy Diplay text browser
+**************************************************************************/
 void MainWindow::on_WelcomeDisplayInventoryButton_clicked()
 {
     stringstream ss;
@@ -174,17 +284,48 @@ void MainWindow::on_WelcomeDisplayInventoryButton_clicked()
     ui->displayInvBrows->setText(temp);
     goToPage(11);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the current GUI Page to the Home Page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Home Page
+**************************************************************************/
 void MainWindow::on_DoneButtonDI_clicked()
 {
     goToPage(0);
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Changes the current GUI Page to the Home Page
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Home Page
+**************************************************************************/
 void MainWindow::on_doneItemSalesButton_clicked()
 {
     goToPage(0);
 }
-
+/**************************************************************************
+* Mutator
+*__________________________________________________________________________
+* Adds a new member to the already existing data base of members. Either Basic
+* or Preferred based off of user input. Then displays it to the screen for
+* verification of its addition.
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed, name, membership type and experation date must
+* already have been inputted by the user.
+* POST-CONDITIONS:
+*   Adds a new member with the specified information to the already existing
+*   data base.
+**************************************************************************/
 void MainWindow::on_AddNewMemberPage_clicked()
 {
     //REQ #9
@@ -244,7 +385,17 @@ void MainWindow::on_ShowAllMembers_clicked()
     ui->OutputMembersText->setText(temp);
 
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Deletes the specified member from the data base
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed, as well as name, membership id and membership
+*   experation must be already entered by the user
+* POST-CONDITIONS:
+*   Changes the current GUI page to the Sales Home Page
+**************************************************************************/
 void MainWindow::on_DeleteMemberPage_clicked()
 {
     QString temp = "Delete member button clicked!";
@@ -272,8 +423,6 @@ void MainWindow::on_DeleteMemberPage_clicked()
         cout << "Error. All Checked." << endl;
     }
 
-
-
 }
 
 void MainWindow::on_UpdateExisitingMemberPage_clicked()
@@ -295,7 +444,20 @@ void MainWindow::on_ShowAllBasicMembers_clicked()
     ui->OutputMembersText->setText(temp);
 
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Tells the user, upon receiving the membership name, id and type from the user.
+* Where it will then determine if a membership should switch to either Basic or
+* Preferred
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed, name, membership id and membership type need to
+* already been inputted
+* POST-CONDITIONS:
+*   writes to the screen if a membership should change to a different type, or
+*   stay the same
+**************************************************************************/
 void MainWindow::on_MembershipRecommendationButton_clicked()
 {
     QString temp = "Show member rec button clicked!";
@@ -359,15 +521,29 @@ void MainWindow::on_purchases_display_pushButton_clicked()
     ui->purchasesBrowser->setText(temp);
 
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Prints out the sales report of each member in ascending order, as well as selected
+* membership type
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed, membership type selected by user
+* POST-CONDITIONS:
+*   Writes to the text browser the list of purchased item by each member,
+*   is organized in ascending order, includes a grand total at the bottom of each
+*   report
+**************************************************************************/
 void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
 {
     double TAX = 0.0875;
     //Takes care of #3 from the Warehouse docx
-        //Works apparently, according to kev. i fucking hope it does
+        //Works apparently, according to kev. i hope it does
         cout << "\nAll Member Purchases button clicked\n";
         string id;
+        string hold;
         string str;
+        stringstream ss;
         Container<Member>::Iterator it;
         //For Preferred members
         if(ui->radioButtonPrefered->isChecked() == false
@@ -384,6 +560,8 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
             for(int i = 0; i < myClub.preferredMemberDatabase.length();i++){
                 //Testing: cout << "\nStart of 1st for loop\n";
                 id = (*it).getId();
+                str += id;
+                str += "\n";
                 str += myClub.totalPurchasesByMember(id,"Preferred");
                 str += "\n\n";
                 it++;
@@ -402,7 +580,9 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
             }
             //Testing: cout << "\nEnd of loops\n";
             str += "Total: ";
-            str += total;
+            ss << total;
+            hold = ss.str();
+            str.append(hold);
             //Testing: cout << "\nTotal was added\n";
             ui->OutputMembersText->setText(QString::fromStdString(str));
 
@@ -417,6 +597,8 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
             for(int i = 0; i < myClub.basicMemberDatabase.length();i++){
                 //Testing: cout << "\nStart of 1st for loop\n";
                 id = (*it).getId();
+                str += id;
+                str += "\n";
                 str += myClub.totalPurchasesByMember(id,"Basic");
                 str += "\n\n";
                 it++;
@@ -435,7 +617,9 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
             }
             //Testing: cout << "\nEnd of loops\n";
             str += "Total: ";
-            str += total;
+            ss << total;
+            hold = ss.str();
+            str.append(hold);
             //Testing: cout << "\nTotal was added\n";
             ui->OutputMembersText->setText(QString::fromStdString(str));
         }
@@ -450,6 +634,8 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
             for(int i = 0; i < myClub.preferredMemberDatabase.length();i++){
                 //Test: cout << "\nStart of 1st for Preferred loop\n";
                 id = (*it).getId();
+                str += id;
+                str += "\n";
                 str += myClub.totalPurchasesByMember(id,"Preferred");
                 str += "\n\n";
                 it++;
@@ -467,7 +653,9 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
                 it++;
             }
             str += "Total: ";
-            str += total;
+            ss << total;
+            hold = ss.str();
+            str.append(hold);
             finalOutput = str;
             finalOutput += "\nBasic:\n\n";
 
@@ -479,6 +667,8 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
             for(int i = 0; i < myClub.basicMemberDatabase.length();i++){
                 //Test: cout << "\nStart of 1st for Preferred loop\n";
                 id = (*it).getId();
+                str += id;
+                str += "\n";
                 str += myClub.totalPurchasesByMember(id,"Basic");
                 str += "\n\n";
                 it++;
@@ -496,7 +686,9 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
                 it++;
             }
             str += "Total: ";
-            str += total;
+            ss << total;
+            hold = ss.str();
+            str.append(hold);
             finalOutput = str;
 
             ui->OutputMembersText->setText(QString::fromStdString(finalOutput));
@@ -504,6 +696,18 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
 }
 
 //REQ #4
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* A user enters an item name and recieves the quantity sold as well as the items
+* toal sales price
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Button must be pressed and user must enter an item name
+* POST-CONDITIONS:
+*   Prints to the screen the amount already sold as wells as the items total
+*   sales price
+**************************************************************************/
 void MainWindow::on_inventory_search_pushButton_clicked()
 {
     //Take QString from GUI
@@ -522,12 +726,21 @@ void MainWindow::on_inventory_search_pushButton_clicked()
     //Set browser text to Qstring itemReport
     ui->displayInvBrows->setText(itemReport);
 }
-
+//REQ #5
 void MainWindow::on_inventory_searchAll_pushButton_clicked()
 {
 
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Writes to the screen all PreferredMembers rebates
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Preferred member data base can not be empty
+* POST-CONDITIONS:
+*   Returns the rebate reports for all preferred members
+**************************************************************************/
 void MainWindow::on_allPreferredMemberRebatesButton_clicked()
 {
     cout << "=============================" << endl;
@@ -538,9 +751,17 @@ void MainWindow::on_allPreferredMemberRebatesButton_clicked()
     ui->OutputMembersText->setText(rebateReport);
     cout << "=============================" << endl;
 }
-
-
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Writes to the screen the list of all membership dues, organized by membership
+* type and name
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Must be pressed, databases can not be empty
+* POST-CONDITIONS:
+*   Writes to the screen the list of all membership dues
+**************************************************************************/
 void MainWindow::on_membershipDuesButton_clicked()
 {
     //REQUIREMENT #7 -

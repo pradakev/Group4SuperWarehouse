@@ -26,9 +26,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    /********************************
+    * CONSTRUCTOR(S) / DECONSTRUCTOR
+    ********************************/
     MainWindow(QWidget *parent = nullptr);
-    void goToPage(int pg);
     ~MainWindow();
+    /*******************
+    * MUTATOR(S)
+    ********************/
+    void goToPage(int pg);
 
 private slots:
     void on_MemberPurchases_Button_clicked();
@@ -88,8 +94,13 @@ private slots:
     void on_membershipDuesButton_clicked();
 
 private:
-    Ui::MainWindow *ui;
-    wholesaleClub myClub;
-
+    Ui::MainWindow *ui;             //IN OUT MainWindow pointer
+    wholesaleClub myClub;           //IN OUT WholesaleClub assist in function
+                                    //execution
 };
+/*******************************************************************************
+ * MainWindow Class
+ * This class traverses through the GUI and preforms specialized functions suc
+ * as switching trhough pages or writing information to the screen
+ ******************************************************************************/
 #endif // MAINWINDOW_H

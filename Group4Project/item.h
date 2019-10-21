@@ -24,16 +24,16 @@ public:
     /*ACCESSOR(S)
 
 	********************/
-	std::string getName() const;
-	double getPrice() const;
-	int getQuantityAvailable() const;
-	int getQuantitySold() const;
-    string getDateBought() const;
+    std::string getName() const;        //OUT - Name of Item
+    double getPrice() const;            //OUT - Price of Item
+    int getQuantityAvailable() const;   //OUT - Quantity Available of Item
+    int getQuantitySold() const;        //OUT - Quantity of Item sold
+    string getDateBought() const;       //OUT - Date of Item Purchase
 	
 	/*******************
 	* MUTATOR(S)
 	********************/
-	void changeName(std::string nName);
+    void changeName(std::string nName);
 	void changePrice(double nPrice);
 	void changeQAvailable(int available);
 	void changeQSold(int sold);

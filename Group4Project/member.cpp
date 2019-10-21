@@ -32,6 +32,18 @@ Member::Member(string paramName,
 //}
 
 //Sales Accessors
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Takes in a date as a string, and then returns the total of all items sold
+* on that date
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A date must be passed in
+* POST-CONDITIONS:
+*   Returns a double of the total price of all the items sold on the passed in
+*  date
+**************************************************************************/
 double Member::sumPurchasesDate(string date)
 {
     double total = 0;
@@ -49,7 +61,17 @@ double Member::sumPurchasesDate(string date)
     return total;
 
 }
-
+/**************************************************************************
+* Mutator
+*__________________________________________________________________________
+* Adds an item to the members itemsBought container
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Item thing needs to have been passed in
+* POST-CONDITIONS:
+*   Adds the item to the member's itemsBought container for later use, also
+*   prints to the screen that an item as been added for verification.
+**************************************************************************/
 void Member::addItem(const Item& thing)
 {
     cout << thing << endl;
@@ -102,7 +124,17 @@ bool Member::operator>(Member& rhs) const
 {
     return(stoi(iD) > stoi(rhs.getId()));
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns an ostream (os) of a formatted member. Containing the name, id,
+* membership, membership expiration date and the total spent without taxes.
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   a member must already exist with a purchase history
+* POST-CONDITIONS:
+*   returns a formatted list of member information
+**************************************************************************/
 ostream& operator<<(ostream& os, const Member& paramMember)
 {
     os << "\n========MEMBER OBJECT========\n"
@@ -121,6 +153,16 @@ void Member::setExpiration(string expiration){this->expiration = expiration;}
 void Member::setTotalSpent(float paramTotal){this->totalSpentPreTax = paramTotal;}
 
 //ItemsBoughtContainer
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a list of all items purchased by a member
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A member must already exist and have purchased items
+* POST-CONDITIONS:
+*   Returns a report of all items purchased by a user
+**************************************************************************/
 string Member::allPurchasesReport()
 {
     string report;
@@ -138,7 +180,16 @@ string Member::allPurchasesReport()
     report = ss.str();
     return report;
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns the total amount of money spent by a member, including taxes
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A member must already exist with a purchase history
+* POST-CONDITIONS:
+*   Returns the total amount spent by a user, including taxes
+**************************************************************************/
 string Member::totalSpentWTax(float tax)
 {
     //Iterate through items bought and add to total
@@ -166,7 +217,17 @@ double Member::getTotalSpentPreTax()
 {
     return totalSpentPreTax;
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a members rebate amount, based off the passed in %
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A member must already exist with a purchase history and a rebate % must be
+* passed in
+* POST-CONDITIONS:
+*   Returns the members rebate amount
+**************************************************************************/
 string Member::rebateAmt(double rebPct)
 {
         double rebAmt = 0;
@@ -174,7 +235,17 @@ string Member::rebateAmt(double rebPct)
         string rebReport = to_string(rebAmt);
         return rebReport;
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a members rebate amount, based off the passed in %
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A member must already exist with a purchase history and a rebate % must be
+* passed in
+* POST-CONDITIONS:
+*   Returns the members rebate amount
+**************************************************************************/
 double Member::rebateAmtNUM(double rebPct)
 {
     double rebAmt = 0;
@@ -183,6 +254,16 @@ double Member::rebateAmtNUM(double rebPct)
 }
 
 //REQ #4 Item Report
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns the quantity of an item already sold with its name passed in
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Item needs to have been purchased by a member
+* POST-CONDITIONS:
+*   Returns the amount of units sold of a particular item
+**************************************************************************/
 double Member::getQuantityItemsSold(string itemUsed)
 {
     double totalQuantity = 0;
@@ -202,6 +283,16 @@ double Member::getQuantityItemsSold(string itemUsed)
     return totalQuantity;
 
 }
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns the total price of the items sold
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Item needs to have been purchased by a member with it's name passed in
+* POST-CONDITIONS:
+*   Returns the the total amount spent on a particular item by a member
+**************************************************************************/
 double Member::getTotalItemPrice(string itemUsed)
 {
     double totalItemPrice = 0;

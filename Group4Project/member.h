@@ -89,5 +89,43 @@ private:
 
 };
 
+/*******************************************************************************
+ * Member Class
+ * This class contains attributes such as the Name, Id, Membership, and Expiration
+ * for a member. As well as a list of all items purchased.
+ ******************************************************************************/
+/***********************************
+ * CTOR
+ * ********************************/
+/*******************************************************************************
+ * Member()
+ * Default CTOR: Constructs a blank member object
+ * Parameters:none
+ * Return:none
+ ******************************************************************************/
 
+/*******************************************************************************
+ * Member(string paramName,
+        string paramId);
+ * 2 Parameter CTOR: Constructs a member object w/ name and id
+ * Parameters:
+ *	paramName: name of the member
+ *	paramId: member Id
+ * Return:none
+ ******************************************************************************/
+
+/*******************************************************************************
+ *  Member(string paramName,
+            string paramId,
+            string paramMembership,
+            string expiration);
+ * 4 Parameter CTOR: Constructs a member object w/ name, id, membership type &
+ * experation
+ * Parameters:
+ *	paramName: name of the member
+ *	paramId: member's Id
+ *	paramMembership: member's membership type
+ *	expiration: member;s membership expieration date
+ * Return:none
+ ******************************************************************************/
 #endif //MEMBER_H
