@@ -52,10 +52,25 @@ public:
     string AllMembershipRec();
 
     //Initialize databases
-    Container<Member> basicMemberDatabase;
-    Container<Member> preferredMemberDatabase;
+    Container<Member> basicMemberDatabase;      //IN OUT - A continer of basic
+                                                //Members
+    Container<Member> preferredMemberDatabase;  //IN OUT - A container of
+                                                //preferred members
 };
 
 #endif // WHOLESALECLUB_H
 
-//This class
+/*******************************************************************************
+ * Wholesaleclub Class
+ * This class contains accessors or mutators for the member and item classes.
+ * Additionally aids in function execution.
+ ******************************************************************************/
+/***********************************
+ * CTOR
+ * ********************************/
+/*******************************************************************************
+ * Wholesaleclub()
+ * Default CTOR: Constructs a wholesaleclub object
+ * Parameters:none
+ * Return:none
+ ******************************************************************************/

@@ -6,7 +6,18 @@ wholesaleClub::wholesaleClub()
 {
 
 }
-
+/**************************************************************************
+* Mutator
+*__________________________________________________________________________
+* Reads through a file of members, adding basic members to the basic
+* memberDatabase and preferred to the preferredMemberDatabase
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   warehouseshoppers.txt must exist
+* POST-CONDITIONS:
+*   basicMemberDatabase is filled with basic members, preferredMemberDatabase
+*   is filled with preferred members.
+**************************************************************************/
 void wholesaleClub::updateMembers()
 {
     ifstream reader;
@@ -109,7 +120,17 @@ void wholesaleClub::updateMembers()
 
 
 }
-
+/**************************************************************************
+* Mutator
+*__________________________________________________________________________
+* Fills the itemsbought container for the correct corresponding members
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   basicMemberDatabase and preferredMemberDatabase must already be filled with
+*   with members.
+* POST-CONDITIONS:
+*   Any item purchased by a member will be stored in their itemsBought container
+**************************************************************************/
 void wholesaleClub::updateSalesforMembers()
 {
     string date,
@@ -158,12 +179,22 @@ void wholesaleClub::updateSalesforMembers()
            price = stod(priceStr);
            quantity = stoi(quantityStr);
            addItemToMember(Item(name, price, quantity, date), id);
+
        }
        instream.close();
    }
    cout << "=========Done Updating===========" << endl;
 }
-
+/**************************************************************************
+* Mutator
+*__________________________________________________________________________
+* Adds an item to an existing member's itemsBought container
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   an item and a member id must be passed in
+* POST-CONDITIONS:
+*   adds the passed in item to the member's itemsBought container
+**************************************************************************/
 void wholesaleClub::addItemToMember(Item a, string iD)
 {
     Container<Member>::Iterator it;
@@ -196,8 +227,16 @@ void wholesaleClub::addItemToMember(Item a, string iD)
     cout << "ID NOT FOUND WHEN ADDING ITEM TO MEMBER" << endl;
 
 }
-
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns the total amount of money made on a specific date
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A date must be passed in
+* POST-CONDITIONS:
+*   Returns the amount of money made on that specific date
+**************************************************************************/
 string wholesaleClub::dateSalesSum(string date, string membership)
 {
     double totalAgg = 0;
@@ -222,7 +261,16 @@ string wholesaleClub::dateSalesSum(string date, string membership)
     //Then string would be converted to Qstring for GUI.
 
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Displays a list of names of members
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Member databases must already be filled with information.
+* POST-CONDITIONS:
+*   Returns a list of all Member's names
+**************************************************************************/
 void wholesaleClub::displayMembers()
 {
 
@@ -245,81 +293,91 @@ void wholesaleClub::displayMembers()
 
 }
 
-string wholesaleClub::memberPurchasesReport(string membership)
-{
-    string result;
-    stringstream myStream;
-    Container<Member>::Iterator iter;
-    //sort membership
-    //memberDatabase.select_sort();
-    if(membership == "basic"){
-        myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_');
-        result = myStream.str();
-        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
-        {
-            myStream << "\n" << (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.')
-                << (*iter).getItems() << "\n";
-            result += myStream.str();
-        }
-        result = myStream.str();
-        cout << result << endl;
-        return result;
-    }
-    else if(membership == "preferred"){
-        myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_');
-        result = myStream.str();
-        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
-        {
-            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.')
-                << (*iter).getItems() << "\n";
-            result += myStream.str();
-            //member id, name, membership type
-            //item name, quantity, price
-        }
-        result = myStream.str();
-        cout << result << endl;
-        return result;
-    }
-    else{   //Print both memberships
-        myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_');
-        result = myStream.str();
-        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
-        {
-            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.')
-                << (*iter).getItems() << "\n";
-            result += myStream.str();
-            //member id, name, membership type
-            //item name, quantity, price
-        }
-        result = myStream.str();
-        //cout << result << endl;
+//string wholesaleClub::memberPurchasesReport(string membership)
+//{
+//    string result;
+//    stringstream myStream;
+//    Container<Member>::Iterator iter;
+//    //sort membership
+//    //memberDatabase.select_sort();
+//    if(membership == "basic"){
+//        myStream  << "ID:" << setw(30) << setfill('_')
+//        << "Name:" << setw(30) << setfill('_');
+//        result = myStream.str();
+//        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+//        {
+//            myStream << "\n" << (*iter).getId() << setw(30) << setfill('.')
+//                << (*iter).getName() << setw(30) << setfill('.')
+//                << (*iter).getItems() << "\n";
+//            result += myStream.str();
+//        }
+//        result = myStream.str();
+//        cout << result << endl;
+//        return result;
+//    }
+//    else if(membership == "preferred"){
+//        myStream  << "ID:" << setw(30) << setfill('_')
+//        << "Name:" << setw(30) << setfill('_');
+//        result = myStream.str();
+//        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
+//        {
+//            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
+//                << (*iter).getName() << setw(30) << setfill('.')
+//                << (*iter).getItems() << "\n";
+//            result += myStream.str();
+//            //member id, name, membership type
+//            //item name, quantity, price
+//        }
+//        result = myStream.str();
+//        cout << result << endl;
+//        return result;
+//    }
+//    else{   //Print both memberships
+//        myStream  << "ID:" << setw(30) << setfill('_')
+//        << "Name:" << setw(30) << setfill('_');
+//        result = myStream.str();
+//        for(iter = preferredMemberDatabase.begin(); iter != preferredMemberDatabase.end(); iter++)
+//        {
+//            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
+//                << (*iter).getName() << setw(30) << setfill('.')
+//                << (*iter).getItems() << "\n";
+//            result += myStream.str();
+//            //member id, name, membership type
+//            //item name, quantity, price
+//        }
+//        result = myStream.str();
+//        //cout << result << endl;
 
-        myStream  << "ID:" << setw(30) << setfill('_')
-        << "Name:" << setw(30) << setfill('_');
-        result = myStream.str();
-        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
-        {
-            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
-                << (*iter).getName() << setw(30) << setfill('.')
-                << (*iter).getItems() << "\n";
-            result += myStream.str();
-            //member id, name, membership type
-            //item name, quantity, price
-        }
-        result = myStream.str();
-        cout << result << endl;
-        return result;
+//        myStream  << "ID:" << setw(30) << setfill('_')
+//        << "Name:" << setw(30) << setfill('_');
+//        result = myStream.str();
+//        for(iter = basicMemberDatabase.begin(); iter != basicMemberDatabase.end(); iter++)
+//        {
+//            myStream << "\n"<< (*iter).getId() << setw(30) << setfill('.')
+//                << (*iter).getName() << setw(30) << setfill('.')
+//                << (*iter).getItems() << "\n";
+//            result += myStream.str();
+//            //member id, name, membership type
+//            //item name, quantity, price
+//        }
+//        result = myStream.str();
+//        cout << result << endl;
+//        return result;
 
-    }
-}
+//    }
+//}
 
 //SALES REPORTS
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a purchases report of a specific member
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Member must exist, member Id and type must be passed in
+* POST-CONDITIONS:
+*   Returns a purchase report of a specific member
+**************************************************************************/
 string wholesaleClub::totalPurchasesByMember(string id, string membership)
 {
     string totalPurchases;
@@ -364,7 +422,16 @@ string wholesaleClub::totalPurchasesByMember(string id, string membership)
 
     return "Member not found.";
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a member's ID based off the passed in name and membership type
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A name and membership type must be passed in
+* POST-CONDITIONS:
+*   Returns the member's ID based off of the passed in name and membership type
+**************************************************************************/
 string wholesaleClub::memberIdFromName(string name, string membership)
 {
     string id;
@@ -394,6 +461,16 @@ string wholesaleClub::memberIdFromName(string name, string membership)
 }
 
 //REBATE REPORT - REQUIREMENT #6
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a rebate report of preferred members sorted by membership ID
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   Preferred member data base must contain preferred members with purchase hist
+* POST-CONDITIONS:
+*   Returns a rebate report for preferred members sorted by membership ID
+**************************************************************************/
 string wholesaleClub::rebateReport()
 {
     cout << "WholeSaleClub Rebate Report" << endl;
@@ -434,6 +511,16 @@ string wholesaleClub::rebateReport()
 //Membership Expiration Report
 //User inputs a month number and we display all the
 //memberships that expire on that month.
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns all memberships that will expire within the passed in month
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A date must be passed in
+* POST-CONDITIONS:
+*   Returns a list of memberships that will expire within the given month
+**************************************************************************/
 string wholesaleClub::membershipExpirationReport(int month)
 {
     Container<Member>::Iterator iter;
@@ -454,6 +541,16 @@ string wholesaleClub::membershipExpirationReport(int month)
 }
 
 //REQUIREMENT #4
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns the quantity of an item sold as well as the total sales price
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   An existing item name must be passed in
+* POST-CONDITIONS:
+*   Returns the quantity of an item sold as well as the total sales price
+**************************************************************************/
 string wholesaleClub::itemReport(string itemUsed)
 {
     //declare totals that will later be converted to string
@@ -494,6 +591,18 @@ string wholesaleClub::itemReport(string itemUsed)
 }
 
 //REQ #7
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a report showing the amount paid in membership dues by member type
+* and then name
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   member data bases can not be empty
+* POST-CONDITIONS:
+*   Returns a report showing the amount paid in membership dues by a member type
+* and then name
+**************************************************************************/
 string wholesaleClub::memberDuesReport()
 {
     stringstream ss;
@@ -526,6 +635,18 @@ string wholesaleClub::memberDuesReport()
 }
 
 //REQ #9
+/**************************************************************************
+* Mutator
+*__________________________________________________________________________
+* Adds a new member to the data base based off the selected membership type,
+* only adds if the member does not already have a membership
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A "existing" member must be passed in
+* POST-CONDITIONS:
+*   Returns true if the member was succesfully added and adds the new member
+* to the correct data base.
+**************************************************************************/
 bool wholesaleClub::addMemberWC(Member newMember)
 {
     //Get membership type, iterate through respective database
@@ -567,7 +688,18 @@ bool wholesaleClub::addMemberWC(Member newMember)
 
 
 }
-
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a recommendation for basic members on if they should upgrade
+* or stay with their current membership
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A member's name and id must be passed in
+* POST-CONDITIONS:
+*   Returns a recommendation to upgrade or stay the with the same membership
+* type
+**************************************************************************/
 string wholesaleClub::basicMembershipRec(string name, string id)
 {
     double tax = 0.05;
@@ -600,6 +732,18 @@ string wholesaleClub::basicMembershipRec(string name, string id)
     report = ss.str();
     return report;
 }
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a recommendation for preferred members on if they should downgrade
+* membership or stay with the same membership
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   A already existing member name and id must be passed in
+* POST-CONDITIONS:
+*   Returns a recommendation for preferred members on if they should downgrade
+* ot stay with the same membership
+**************************************************************************/
 string wholesaleClub::PreferredMembershipRec(string name, string id)
 {
     double tax = 0.05;
@@ -633,6 +777,18 @@ string wholesaleClub::PreferredMembershipRec(string name, string id)
     return report;
 
 }
+/**************************************************************************
+* Accessor
+*__________________________________________________________________________
+* Returns a recommendation for members on if they should downgrade
+* or upgrade membership
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   member databases can not be empty
+* POST-CONDITIONS:
+*   returns recommendations for all members on if they should upgrade/downgrade
+* or stick with the same membership
+**************************************************************************/
 string wholesaleClub::AllMembershipRec()
 {
     double tax = 0.05;
