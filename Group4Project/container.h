@@ -148,7 +148,17 @@ Container<O>::~Container()
 /*****************
  *** Accessors ***
  *****************/
-
+/**************************************************************************
+* Accessor: Display
+*__________________________________________________________________________
+* Prints all the data within the container
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   The Container object must have values intialized for the linked list
+* attributes head and tail, O objects.
+* POST-CONDITIONS:
+*   All O objects are printed to the screen
+**************************************************************************/
 template <typename O>
 void Container<O>::display() const
 {
@@ -164,7 +174,17 @@ void Container<O>::display() const
     }
 }
 
-
+/**************************************************************************
+* Accessor: begin()
+*__________________________________________________________________________
+* Returns a head pointer
+*__________________________________________________________________________
+* PRO-CONDITIONS:
+*   The Container object must have values intialized for the linked list
+* attributes head and tail, O objects.
+* POST-CONDITIONS:
+*   Returns a pointer that points to head
+**************************************************************************/
 template <typename O>
 typename Container<O>::Iterator Container<O>::begin()
 {
