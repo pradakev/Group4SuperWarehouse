@@ -7,8 +7,6 @@
 #include "../member.h"
 #include "../container.h"
 
-
-
 using namespace std;
 
 class wholesaleClub
@@ -17,19 +15,16 @@ public:
     wholesaleClub();
     void updateMembers();
     void updateSalesforMembers();
-    void addItemToMember(Item a, string iD);
+    void addItemToMember(const Item& a, string iD);
     void displayMembers();
 
     //REPORTS
 
-    string memberPurchasesReport(string membership);
-    string dateSalesSum(string date, string membership);
-    string totalPurchasesByMember(string id, string membership);
-    string memberIdFromName(string name, string membership);
-    string membershipExpirationReport(int month);
+    string memberPurchasesReport();
+    string dateSalesSum(string date);
 
-    //REBATES
-    string rebateReport();  //MEMBERS ONLY
+    string totalPurchasesByMember(string id);
+
     /*REQ. #2
      * A user should be able to enter
      * a membership number or name and
@@ -38,8 +33,8 @@ public:
      * */
 
     //Initialize databases
-    Container<Member> basicMemberDatabase;
-    Container<Member> preferredMemberDatabase;
+    //Container<Member> memberDatabase;
+    Container<Member> memberDatabase;
 };
 
 #endif // WHOLESALECLUB_H
