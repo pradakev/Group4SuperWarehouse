@@ -72,6 +72,7 @@ public:
     void push_back(O value);	//IN - value to add to back of list
     void pop_front();
     void select_sort();
+    void sort_alpha();
 
     /********************************
      ***** Overloaded Operators *****
@@ -345,6 +346,43 @@ void Container<O>::select_sort()
     }
 }
 
+template <typename O>
+void Container<O>::sort_alpha()
+{
+    Node<O>* current;
+    Node<O>* min;
+    O old;
+    bool restart;
+
+    restart = false;
+    current = head;
+    min = current->next;
+
+    while(current)
+    {
+        while(min)
+        {
+            if(min->data.getName()[0] < current->data.getName()[0])
+            {
+                old = current->data;
+                current->data = min->data;
+                min->data = old;
+                current = head;
+                min = current->next;
+                restart = true;
+                break;
+            }
+            min = min->next;
+            restart = false;
+        }
+        if(!restart)
+        {
+            current = current->next;
+            if(current)
+                min = current->next;
+        }
+    }
+}
 /**************************************************************************
 * Overloaded assignment operator =(const Container &list) : class Container
 *__________________________________________________________________________
