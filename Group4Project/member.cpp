@@ -169,19 +169,18 @@ double Member::getTotalSpentPreTax()
 
 string Member::rebateAmt(double rebPct)
 {
-    if(membership == "Preferred")
-    {
         double rebAmt = 0;
         rebAmt = rebPct * totalSpentPreTax;
         string rebReport = to_string(rebAmt);
         return rebReport;
-    }
-    else
-    {
-        cout << "Error. Non-Preferred Member. No Rebates." << endl;
-    }
 }
 
+double Member::rebateAmtNUM(double rebPct)
+{
+    double rebAmt = 0;
+    rebAmt = rebPct * totalSpentPreTax;
+    return rebAmt;
+}
 
 //REQ #4 Item Report
 double Member::getQuantityItemsSold(string itemUsed)

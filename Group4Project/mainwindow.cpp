@@ -187,8 +187,55 @@ void MainWindow::on_doneItemSalesButton_clicked()
 
 void MainWindow::on_AddNewMemberPage_clicked()
 {
-    QString temp = "Add new member button clicked!";
-    ui->OutputMembersText->setText(temp);
+    //REQ #9
+    QString qName, qID, qExp;
+    string name, id, membershipType, expiration;
+
+    //RECORD QSTRINGS
+    qName = ui->memberNameINPUT->text();
+    qID = ui->MemberIDInputMEMBERS->text();
+    qExp = ui->MemberExpInputLineEdit->text();
+
+    //UPDATE STRINGS
+    if(ui->radioButtonBasic->isChecked())
+    {
+        membershipType = "Basic";
+    }
+    else if(ui->radioButtonPrefered->isChecked())
+    {
+        membershipType = "Preferred";
+    }
+    else
+    {
+        cout << "Error. All Checked." << endl;
+    }
+    name = qName.toStdString();
+    id = qID.toStdString();
+    expiration = qExp.toStdString();
+
+    //CREATE MEMBER
+    Member newMem(name, id, membershipType, expiration);
+
+    //SEND TO WHOLESALECLUB DATABASE TO CHECK IF ADDED
+    stringstream ss;
+
+    if(myClub.addMemberWC(newMem) == true)
+    {
+        ss << "New member successfully added!" << endl;
+    }
+    else
+    {
+        ss << "New member not added! Please check Name & ID Duplicate." << endl;
+
+    }
+    ss << "NAME: " << name << endl;
+    ss << "ID: " << id << endl;
+    ss << "MEMBERSHIP: " << membershipType << endl;
+    ss << "EXPIRATION: " << expiration << endl;
+    string memInfo = ss.str();
+    QString addedSuccessOutput = QString::fromStdString(memInfo);
+
+    ui->OutputMembersText->setText(addedSuccessOutput);
 }
 
 void MainWindow::on_ShowAllMembers_clicked()
@@ -202,6 +249,30 @@ void MainWindow::on_DeleteMemberPage_clicked()
 {
     QString temp = "Delete member button clicked!";
     ui->OutputMembersText->setText(temp);
+
+    QString qName, qID, qExp;
+    string name, id, membershipType, expiration;
+
+    //RECORD QSTRINGS
+    qName = ui->memberNameINPUT->text();
+    qID = ui->MemberIDInputMEMBERS->text();
+    qExp = ui->MemberExpInputLineEdit->text();
+
+    //UPDATE STRINGS
+    if(ui->radioButtonBasic->isChecked())
+    {
+        membershipType = "Basic";
+    }
+    else if(ui->radioButtonPrefered->isChecked())
+    {
+        membershipType = "Preferred";
+    }
+    else
+    {
+        cout << "Error. All Checked." << endl;
+    }
+
+
 
 }
 
@@ -230,6 +301,49 @@ void MainWindow::on_MembershipRecommendationButton_clicked()
     QString temp = "Show member rec button clicked!";
     ui->OutputMembersText->setText(temp);
 
+    //REQ #10 & 11
+    QString qName, qID;
+    string name, id, membershipType;
+
+    //RECORD QSTRINGS
+    qName = ui->memberNameINPUT->text();
+    qID = ui->MemberIDInputMEMBERS->text();
+
+    name = qName.toStdString();
+    id = qID.toStdString();
+
+    string report;
+    if(ui->radioButtonBasic->isChecked())
+    {
+        //BASIC MEMBER REC
+        membershipType = "Basic";
+        //DEBUG
+        cout << "Entering basicMemberRec" << endl;
+        report = myClub.basicMembershipRec(name, id);
+
+    }
+    else if(ui->radioButtonPrefered->isChecked())
+    {
+        //PREFERRED MEMBER REC
+        membershipType = "Preferred";
+        cout << "Entering PreferredMemberRec" << endl;
+        report = myClub.PreferredMembershipRec(name, id);
+    }
+    else if(ui->radioButtonAll->isChecked())
+    {
+        //ALL MEMBER REC
+        cout << "Entering AllMemberRec" << endl;
+        report = myClub.AllMembershipRec();
+    }
+    else
+    {
+        cout << "Select a button" << endl;
+        report = "Please select a button.";
+    }
+
+    QString qReport = QString::fromStdString(report);
+    ui->OutputMembersText->setText(qReport);
+
 }
 
 void MainWindow::on_ShowExpiringMembersByMonth_clicked()
@@ -248,20 +362,145 @@ void MainWindow::on_purchases_display_pushButton_clicked()
 
 void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
 {
+    double TAX = 0.0875;
     //Takes care of #3 from the Warehouse docx
-//    string id;
-//    string str;
-//    Container<Member>::Iterator it;
-//    myClub.memberDatabase.select_sort();
-//    for(it = myClub.memberDatabase.begin(); it != myClub.memberDatabase.end();it++){
-//        id = (*it).getId();
-//        str += myClub.totalPurchasesByMember(id);
-//        str += "\n\n";
-//    }
-//    str += "\n";
-//    it = myClub.memberDatabase.begin();
-//    str += (*it).sumTotalPurchases();
-//    ui->OutputMembersText->setText(QString::fromStdString(str));
+        //Works apparently, according to kev. i fucking hope it does
+        cout << "\nAll Member Purchases button clicked\n";
+        string id;
+        string str;
+        Container<Member>::Iterator it;
+        //For Preferred members
+        if(ui->radioButtonPrefered->isChecked() == false
+                && ui->radioButtonBasic->isChecked() == false
+                && ui->radioButtonAll->isChecked() == false){
+            ui->OutputMembersText->setText("Please select one of the radio buttons below!");
+        }
+        if(ui->radioButtonPrefered->isChecked()){
+
+            //Testing: cout << "\n Inside Preferred if\n";
+            myClub.preferredMemberDatabase.select_sort();
+            it = myClub.preferredMemberDatabase.begin();
+            //Should Display all the purchases of the preferredMemberDatabase
+            for(int i = 0; i < myClub.preferredMemberDatabase.length();i++){
+                //Testing: cout << "\nStart of 1st for loop\n";
+                id = (*it).getId();
+                str += myClub.totalPurchasesByMember(id,"Preferred");
+                str += "\n\n";
+                it++;
+            }
+            str += "\n";
+            //After reaching this point the grand total should be calculated
+            it = myClub.preferredMemberDatabase.begin();
+            double total= 0;
+            //Testing: cout << "\nEntering 2nd for loop\n";
+            for(int i = 0; i < myClub.preferredMemberDatabase.length(); i++){
+                //Testing: cout << "\nStart of 2nd for loop\n";
+                string temp;
+                temp = (*it).totalSpentWTax(TAX);
+                total += stof(temp);
+                it++;
+            }
+            //Testing: cout << "\nEnd of loops\n";
+            str += "Total: ";
+            str += total;
+            //Testing: cout << "\nTotal was added\n";
+            ui->OutputMembersText->setText(QString::fromStdString(str));
+
+        }
+    //****************************************************
+        //For basic members
+        else if(ui->radioButtonBasic->isChecked()){
+            //Testing: cout << "\n Inside Preferred if\n";
+            myClub.basicMemberDatabase.select_sort();
+            it = myClub.basicMemberDatabase.begin();
+            //Should Display all the purchases of the preferredMemberDatabase
+            for(int i = 0; i < myClub.basicMemberDatabase.length();i++){
+                //Testing: cout << "\nStart of 1st for loop\n";
+                id = (*it).getId();
+                str += myClub.totalPurchasesByMember(id,"Basic");
+                str += "\n\n";
+                it++;
+            }
+            str += "\n";
+            //After reaching this point the grand total should be calculated
+            it = myClub.basicMemberDatabase.begin();
+            double total= 0;
+            //Testing: cout << "\nEntering 2nd for loop\n";
+            for(int i = 0; i < myClub.preferredMemberDatabase.length(); i++){
+                //Testing: cout << "\nStart of 2nd for loop\n";
+                string temp;
+                temp = (*it).totalSpentWTax(TAX);
+                total += stof(temp);
+                it++;
+            }
+            //Testing: cout << "\nEnd of loops\n";
+            str += "Total: ";
+            str += total;
+            //Testing: cout << "\nTotal was added\n";
+            ui->OutputMembersText->setText(QString::fromStdString(str));
+        }
+    //*****************************************************
+        //For ALL members
+        else if(ui->radioButtonAll->isChecked()){
+            //Starting with Preferred
+            string finalOutput = "";
+            myClub.preferredMemberDatabase.select_sort();
+            it = myClub.preferredMemberDatabase.begin();
+            //Should Display all the purchases of the preferredMemberDatabase
+            for(int i = 0; i < myClub.preferredMemberDatabase.length();i++){
+                //Test: cout << "\nStart of 1st for Preferred loop\n";
+                id = (*it).getId();
+                str += myClub.totalPurchasesByMember(id,"Preferred");
+                str += "\n\n";
+                it++;
+            }
+            str += "\n";
+            //After reaching this point the grand total should be calculated
+            it = myClub.preferredMemberDatabase.begin();
+            double total= 0;
+            //Test: cout << "\nEntering 2nd for loop\n";
+            for(int i = 0; i < myClub.preferredMemberDatabase.length(); i++){
+                //Test: cout << "\nStart of 2nd Preferred for loop\n";
+                string temp;
+                temp = (*it).totalSpentWTax(TAX);
+                total += stof(temp);
+                it++;
+            }
+            str += "Total: ";
+            str += total;
+            finalOutput = str;
+            finalOutput += "\nBasic:\n\n";
+
+            //Now Printing Basic members
+            str = "";
+            myClub.basicMemberDatabase.select_sort();
+            it = myClub.basicMemberDatabase.begin();
+            //Should Display all the purchases of the preferredMemberDatabase
+            for(int i = 0; i < myClub.basicMemberDatabase.length();i++){
+                //Test: cout << "\nStart of 1st for Preferred loop\n";
+                id = (*it).getId();
+                str += myClub.totalPurchasesByMember(id,"Basic");
+                str += "\n\n";
+                it++;
+            }
+            str += "\n";
+            //After reaching this point the grand total should be calculated
+            it = myClub.basicMemberDatabase.begin();
+            total = 0;
+            //Test: cout << "\nEntering 2nd for loop\n";
+            for(int i = 0; i < myClub.basicMemberDatabase.length(); i++){
+                //Test: cout << "\nStart of 2nd Preferred for loop\n";
+                string temp;
+                temp = (*it).totalSpentWTax(TAX);
+                total += stof(temp);
+                it++;
+            }
+            str += "Total: ";
+            str += total;
+            finalOutput = str;
+
+            ui->OutputMembersText->setText(QString::fromStdString(finalOutput));
+        }
 }
 
 //REQ #4
@@ -301,3 +540,11 @@ void MainWindow::on_allPreferredMemberRebatesButton_clicked()
 }
 
 
+
+void MainWindow::on_membershipDuesButton_clicked()
+{
+    //REQUIREMENT #7 -
+    string report = myClub.memberDuesReport();
+    QString qReport = QString::fromStdString(report);
+    ui->OutputMembersText->setText(qReport);
+}

@@ -85,6 +85,8 @@ private slots:
 
     void on_allPreferredMemberRebatesButton_clicked();
 
+    void on_membershipDuesButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     wholesaleClub myClub;
