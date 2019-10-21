@@ -37,6 +37,9 @@ public:
      *  per that member.
      * */
 
+    //ITEMS REQ #4
+    string itemReport(string itemUsed);
+
     //Initialize databases
     Container<Member> basicMemberDatabase;
     Container<Member> preferredMemberDatabase;
