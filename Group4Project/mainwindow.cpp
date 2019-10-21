@@ -264,11 +264,24 @@ void MainWindow::on_members_AllMemberPurchases_pushButton_clicked()
 //    ui->OutputMembersText->setText(QString::fromStdString(str));
 }
 
+//REQ #4
 void MainWindow::on_inventory_search_pushButton_clicked()
 {
-//    QString temp = ui->inventory_input_lineEdit->text();
-//    string str = temp.toStdString();
+    //Take QString from GUI
+    QString item = ui->inventory_input_lineEdit->text();
+    //Convert QString to string
+    string strItem = item.toStdString();
 
+    //call the itemReport from wholesaleclub that returns report
+    //for that specific item
+    string report;
+    report = myClub.itemReport(strItem);
+
+    //Convert itemreport string to QString
+    QString itemReport = QString::fromStdString(report);
+
+    //Set browser text to Qstring itemReport
+    ui->displayInvBrows->setText(itemReport);
 }
 
 void MainWindow::on_inventory_searchAll_pushButton_clicked()

@@ -245,8 +245,6 @@ void wholesaleClub::displayMembers()
 
 }
 
-
-
 string wholesaleClub::memberPurchasesReport(string membership)
 {
     string result;
@@ -320,8 +318,6 @@ string wholesaleClub::memberPurchasesReport(string membership)
 
     }
 }
-
-
 
 //SALES REPORTS
 string wholesaleClub::totalPurchasesByMember(string id, string membership)
@@ -397,7 +393,7 @@ string wholesaleClub::memberIdFromName(string name, string membership)
     return "Member not found.";
 }
 
-//REBATE REPORT
+//REBATE REPORT - REQUIREMENT #6
 string wholesaleClub::rebateReport()
 {
     cout << "WholeSaleClub Rebate Report" << endl;
@@ -455,4 +451,44 @@ string wholesaleClub::membershipExpirationReport(int month)
     }
     //cout << report.str();
     return report.str();
+}
+
+//REQUIREMENT #4
+string wholesaleClub::itemReport(string itemUsed)
+{
+    //declare totals that will later be converted to string
+    double totalQuantitySold = 0;
+    double totalItemPrice = 0;
+
+    //Iterate through both databases
+
+    Container<Member>::Iterator iter;
+    iter = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
+        //Add individual member itemsBought to totals
+        totalQuantitySold += (*iter).getQuantityItemsSold(itemUsed);
+        totalItemPrice += (*iter).getTotalItemPrice(itemUsed);
+        iter++;
+    }
+
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        //Add individual member itemsBought to totals
+        totalQuantitySold += (*iter).getQuantityItemsSold(itemUsed);
+        totalItemPrice += (*iter).getTotalItemPrice(itemUsed);
+        iter++;
+    }
+
+    //NOW Make doubles to strings. First use stringstream
+    stringstream ss;
+    ss << "Item:" << itemUsed << endl;
+    ss << "Total Quantiy Sold: " << totalQuantitySold << endl;
+    ss << "Total Price Sold: " << totalItemPrice << endl;
+
+    string itemR;
+    itemR = ss.str();
+
+    return itemR;
 }

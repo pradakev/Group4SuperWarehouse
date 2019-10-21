@@ -181,3 +181,43 @@ string Member::rebateAmt(double rebPct)
         cout << "Error. Non-Preferred Member. No Rebates." << endl;
     }
 }
+
+
+//REQ #4 Item Report
+double Member::getQuantityItemsSold(string itemUsed)
+{
+    double totalQuantity = 0;
+    //Iterate through itemsBought. If item found, add to totalQuantity
+    Container<Item>::Iterator iter;
+    iter = itemsBought.begin();
+    for(int i = 0; i < itemsBought.length(); i++)
+    {
+        if(itemUsed == (*iter).getName())
+        {
+            cout << "ITEM FOUND. Adding to total."<< (*iter).getName() << endl;
+            cout << "ITEM FOUND. Adding to total Quantity"<< endl;
+            totalQuantity++;
+        }
+        iter++;
+    }
+    return totalQuantity;
+
+}
+double Member::getTotalItemPrice(string itemUsed)
+{
+    double totalItemPrice = 0;
+    //Iterate through itemsBought. If item found, add to totalPrice
+    Container<Item>::Iterator iter;
+    iter = itemsBought.begin();
+    for(int i = 0; i < itemsBought.length(); i++)
+    {
+        if(itemUsed == (*iter).getName())
+        {
+            cout << "ITEM FOUND. Adding to total."<< (*iter).getName() << endl;
+            cout << "ITEM FOUND. Adding to total $"<< (*iter).getPrice() << endl;
+            totalItemPrice += (*iter).getPrice();
+        }
+        iter++;
+    }
+    return totalItemPrice;
+}

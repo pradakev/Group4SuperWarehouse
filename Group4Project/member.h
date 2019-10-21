@@ -55,6 +55,10 @@ public:
     string totalSpentWTax(float tax);
     double getTotalSpentPreTax();
     string rebateAmt(double rebPct);
+
+    //REQ #4 Item Report HELPERS
+    double getQuantityItemsSold(string itemUsed);
+    double getTotalItemPrice(string itemUsed);
 	
 	/*******************
 	* MUTATOR(S)
