@@ -492,3 +492,196 @@ string wholesaleClub::itemReport(string itemUsed)
 
     return itemR;
 }
+
+//REQ #7
+string wholesaleClub::memberDuesReport()
+{
+    stringstream ss;
+    ss << "MEMBERSHIP DUES REPORT:" << endl << endl;
+    Container<Member>::Iterator iter;
+    iter = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
+        ss << "NAME: "<< (*iter).getName() << endl;
+        ss << "ID: " << (*iter).getId() << endl;
+        ss << "MEMBERSHIP: " << (*iter).getMembership() << endl;
+        ss << "DUES: $60" << endl;
+        ss << endl;
+        iter++;
+    }
+
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        ss << "NAME: "<< (*iter).getName() << endl;
+        ss << "ID: " << (*iter).getId() << endl;
+        ss << "MEMBERSHIP: " << (*iter).getMembership() << endl;
+        ss << "DUES: $75" << endl;
+        ss << endl;
+        iter++;
+    }
+
+    string mReport = ss.str();
+    return  mReport;
+}
+
+//REQ #9
+bool wholesaleClub::addMemberWC(Member newMember)
+{
+    //Get membership type, iterate through respective database
+    //Then make sure if new member is not duplicate (id, name)
+    string membershipType = newMember.getMembership();
+    Container<Member>::Iterator iter;
+    iter = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
+        cout << "Checking Basic Members" << endl;
+        if(newMember.getName() == (*iter).getName())
+            return false;
+        if(newMember.getId() == (*iter).getId())
+            return false;
+        iter++;
+    }
+
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        if(newMember.getName() == (*iter).getName())
+            return false;
+        if(newMember.getId() == (*iter).getId())
+            return false;
+        iter++;
+    }
+
+    if(newMember.getMembership() == "Preferred")
+    {
+        preferredMemberDatabase.push_back(newMember);
+    }
+    else
+    {
+        basicMemberDatabase.push_back(newMember);
+    }
+
+    //Member is not duplicate
+    return true;
+
+
+}
+
+string wholesaleClub::basicMembershipRec(string name, string id)
+{
+    double tax = 0.05;
+    string report;
+    stringstream ss;
+
+    Container<Member>::Iterator iter;
+    iter = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
+        if(name == (*iter).getName() || id == (*iter).getId())
+        {
+            //IF FOUND
+            ss<< "NAME: " << (*iter).getName() << endl;
+            ss<< "POTENTIAL REBATE AMT: " << (*iter).rebateAmt(tax) << endl;
+            ss << "MEMBERSHIP: " << (*iter).getMembership() << endl;
+            if((*iter).rebateAmtNUM(tax) >= 15)
+            {
+                ss << "You should convert to a Preferred Membership!" << endl;
+            }
+            else
+            {
+                ss << "You should stay on Basic Membership!" << endl;
+            }
+            ss << endl;
+        }
+            iter++;
+    }
+
+    report = ss.str();
+    return report;
+}
+string wholesaleClub::PreferredMembershipRec(string name, string id)
+{
+    double tax = 0.05;
+    string report;
+    stringstream ss;
+
+    Container<Member>::Iterator iter;
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        if(name == (*iter).getName() || id == (*iter).getId())
+        {
+            //IF FOUND
+            ss << "NAME: " << (*iter).getName() << endl;
+            ss << "REBATE AMT: " << (*iter).rebateAmt(tax) << endl;
+            ss << "MEMBERSHIP: " << (*iter).getMembership() << endl;
+            if((*iter).rebateAmtNUM(tax) < 15)
+            {
+                ss << "You should convert to a Basic Membership!" << endl;
+            }
+            else
+            {
+                ss << "You should stay on Preferred Membership!" << endl;
+            }
+            ss << endl;
+        }
+            iter++;
+    }
+
+    report = ss.str();
+    return report;
+
+}
+string wholesaleClub::AllMembershipRec()
+{
+    double tax = 0.05;
+    string report;
+    stringstream ss;
+
+    Container<Member>::Iterator iter;
+    iter = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
+        cout << "Entering AllMemberRec BASIC" << endl;
+        ss << "NAME: " << (*iter).getName() << endl;
+        ss << "MEMBERSHIP: " << (*iter).getMembership() << endl;
+        ss << "POTENTIAL REBATE AMT: $" << (*iter).rebateAmt(tax) << endl;
+        if((*iter).rebateAmtNUM(tax) >= 15)
+        {
+            ss << "You should convert to a Preferred Membership!" << endl;
+        }
+        else
+        {
+            ss << "You should stay on Basic Membership!" << endl;
+        }
+        ss << endl;
+
+        iter++;
+    }
+
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        cout << "Entering AllMemberRec PREFERRED" << endl;
+        ss << "NAME: " << (*iter).getName() << endl;
+        ss << "MEMBERSHIP: " << (*iter).getMembership() << endl;
+        ss << "REBATE AMT: $" << (*iter).rebateAmt(tax) << endl;
+        if((*iter).rebateAmtNUM(tax) < 15)
+        {
+            ss << "You should convert to a Basic Membership!" << endl;
+        }
+        else
+        {
+            ss << "You should stay on Preferred Membership!" << endl;
+        }
+        ss << endl;
+
+        iter++;
+    }
+
+    cout << "Reached end of ALLMEMBERSREC" << endl;
+    report = ss.str();
+    cout << report << endl;
+    return report;
+}

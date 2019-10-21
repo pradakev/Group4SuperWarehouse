@@ -55,6 +55,7 @@ public:
     string totalSpentWTax(float tax);
     double getTotalSpentPreTax();
     string rebateAmt(double rebPct);
+    double rebateAmtNUM(double rebPct);
 
     //REQ #4 Item Report HELPERS
     double getQuantityItemsSold(string itemUsed);
@@ -76,9 +77,11 @@ public:
 private:
 	string name;		//IN OUT - Name of Member
 	string iD;			//IN OUT - iD of Member
-  string membership;		//IN OUT - membership type 'b'or 'p'
+    string membership;		//IN OUT - membership type 'b'or 'p'
 	string expiration;		//IN OUT - expiration date mm/dd/yyyy
-  double totalSpentPreTax;		//IN OUT - total spent before tax
+    double totalSpentPreTax;		//IN OUT - total spent before tax
+
+    //REQ #7 Sort by name. Will change operator< to sort dependent on this bool
 
     //Added
     Container<Item> itemsBought;

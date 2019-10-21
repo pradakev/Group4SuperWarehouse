@@ -40,6 +40,17 @@ public:
     //ITEMS REQ #4
     string itemReport(string itemUsed);
 
+    //REQ #6
+    string memberDuesReport();
+
+    //REQ #9 - Bool to return true if member added, false if not added
+    bool addMemberWC(Member newMember);
+
+    //#10
+    string basicMembershipRec(string name, string id);
+    string PreferredMembershipRec(string name, string id);
+    string AllMembershipRec();
+
     //Initialize databases
     Container<Member> basicMemberDatabase;
     Container<Member> preferredMemberDatabase;
