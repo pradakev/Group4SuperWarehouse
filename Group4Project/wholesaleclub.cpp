@@ -201,9 +201,19 @@ void wholesaleClub::addItemToMember(Item a, string iD)
 string wholesaleClub::dateSalesSum(string date, string membership)
 {
     double totalAgg = 0;
-    Container<Member>::Iterator it;
-    for(it = basicMemberDatabase.begin(); it != basicMemberDatabase.end(); it++)
+    Container<Member>::Iterator it = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
         totalAgg += (*it).sumPurchasesDate(date);
+        it++;
+    }
+
+    it = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        totalAgg += (*it).sumPurchasesDate(date);
+        it++;
+    }
     string answer;
 
     answer = to_string(totalAgg);
@@ -217,14 +227,21 @@ void wholesaleClub::displayMembers()
 {
 
     //REMEMBER TO INCLUDE END ITERATOR ITEM OR ELSE WON"T WORK
-    Container<Member>::Iterator useMe;
-    for(useMe = basicMemberDatabase.begin(); useMe != basicMemberDatabase.end(); useMe++)
+    Container<Member>::Iterator useMe = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
     {
 
         cout << (*useMe).getName() << endl;
+        useMe++;
     }
-    useMe = basicMemberDatabase.end();
-    cout << (*useMe).getName() << endl;
+
+    useMe = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+
+        cout << (*useMe).getName() << endl;
+        useMe++;
+    }
 
 }
 
@@ -314,7 +331,7 @@ string wholesaleClub::totalPurchasesByMember(string id, string membership)
     Container<Member>::Iterator it;
     it = basicMemberDatabase.begin();
 
-    for(; it != basicMemberDatabase.end(); it++)
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
     {
         cout << (*it).getId() << "." << endl;
         cout << id << "." << endl;
@@ -328,7 +345,27 @@ string wholesaleClub::totalPurchasesByMember(string id, string membership)
             totalPurchases = (*it).allPurchasesReport();
             return totalPurchases;
         }
+        it++;
     }
+
+    it = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        cout << (*it).getId() << "." << endl;
+        cout << id << "." << endl;
+        if (id != (*it).getId())
+        {
+            cout << "Not Found" << endl;
+        }
+        if (id == (*it).getId())
+        {
+            cout << "ID Found for total purchases." << endl;
+            totalPurchases = (*it).allPurchasesReport();
+            return totalPurchases;
+        }
+        it++;
+    }
+
     return "Member not found.";
 }
 
@@ -337,13 +374,25 @@ string wholesaleClub::memberIdFromName(string name, string membership)
     string id;
     Container<Member>::Iterator it;
     it = basicMemberDatabase.begin();
-    for(; it != basicMemberDatabase.end(); it++)
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
     {
         if((*it).getName() == name)
         {
             id = (*it).getId();
             return id;
         }
+        it++;
+    }
+
+    it = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        if((*it).getName() == name)
+        {
+            id = (*it).getId();
+            return id;
+        }
+        it++;
     }
     return "Member not found.";
 }
@@ -361,17 +410,20 @@ string wholesaleClub::rebateReport()
     stringstream ssReport;
     Container<Member>::Iterator it = preferredMemberDatabase.begin();
 
+    ssReport << "REBATE REPORT FOR PREFERRED MEMBERS" << endl;
+    ssReport << endl;
+
     for(int i = 0; i < preferredMemberDatabase.length(); i++)
     {
         //DEBUG
         cout << "NAME: " << (*it).getName() << endl;
-        cout << "ID:"<< (*it).getId() << endl;
+        cout << "ID: "<< (*it).getId() << endl;
         cout << "TOTAL SPENT: $" <<(*it).getTotalSpentPreTax() << endl;
         cout << "REBATE AMT: $" << (*it).rebateAmt(rebatePct) << endl;
         cout << endl;
 
         ssReport << "NAME: "<< (*it).getName() << endl;
-        ssReport << "ID:" << (*it).getId() << endl;
+        ssReport << "ID: " << (*it).getId() << endl;
         ssReport << "TOTAL SPENT: $"<< (*it).getTotalSpentPreTax() << endl;
         ssReport << "REBATE AMT: $" << (*it).rebateAmt(rebatePct) << endl;
         ssReport << endl;
