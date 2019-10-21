@@ -1,0 +1,200 @@
+03/05/2013
+67899
+Potato Bread
+1.79	0
+03/05/2013
+67899
+The Alamo
+19.95	0
+03/05/2013
+67899
+Most Basic DVD Player
+59.99	0
+03/05/2013
+67899
+Instant Coffee
+6.75	0
+03/06/2013
+67899
+Ponds Lotion
+5.79	0
+03/13/2013
+67899
+Bkfst Cereal Variety Pack
+7.29	0
+03/05/2013
+67899
+Potato Bread
+1.79	0
+03/05/2013
+67899
+The Alamo
+19.95	0
+03/05/2013
+67899
+Most Basic DVD Player
+59.99	0
+03/05/2013
+67899
+Instant Coffee
+6.75	0
+03/06/2013
+67899
+Ponds Lotion
+5.79	0
+03/13/2013
+67899
+Bkfst Cereal Variety Pack
+7.29	0
+03/05/2013
+12899
+Ground Beef
+6.85	0
+03/05/2013
+12899
+Pork Tenderloin
+17.25	0
+03/05/2013
+12899
+Shrek 2
+19.95	0
+03/05/2013
+12899
+Paper Shredder
+199.99	0
+03/13/2013
+12899
+Pepsi
+6.75	0
+03/05/2013
+67899
+Potato Bread
+1.79	0
+03/05/2013
+67899
+The Alamo
+19.95	0
+03/05/2013
+67899
+Most Basic DVD Player
+59.99	0
+03/05/2013
+67899
+Instant Coffee
+6.75	0
+03/06/2013
+67899
+Ponds Lotion
+5.79	0
+03/13/2013
+67899
+Bkfst Cereal Variety Pack
+7.29	0
+03/05/2013
+12899
+Ground Beef
+6.85	0
+03/05/2013
+12899
+Pork Tenderloin
+17.25	0
+03/05/2013
+12899
+Shrek 2
+19.95	0
+03/05/2013
+12899
+Paper Shredder
+199.99	0
+03/13/2013
+12899
+Pepsi
+6.75	0
+03/06/2013
+31311
+The Bourne Supremacy
+19.95	0
+03/05/2013
+67899
+Potato Bread
+1.79	0
+03/05/2013
+67899
+The Alamo
+19.95	0
+03/05/2013
+67899
+Most Basic DVD Player
+59.99	0
+03/05/2013
+67899
+Instant Coffee
+6.75	0
+03/06/2013
+67899
+Ponds Lotion
+5.79	0
+03/13/2013
+67899
+Bkfst Cereal Variety Pack
+7.29	0
+03/05/2013
+12899
+Ground Beef
+6.85	0
+03/05/2013
+12899
+Pork Tenderloin
+17.25	0
+03/05/2013
+12899
+Shrek 2
+19.95	0
+03/05/2013
+12899
+Paper Shredder
+199.99	0
+03/13/2013
+12899
+Pepsi
+6.75	0
+03/06/2013
+31311
+The Bourne Supremacy
+19.95	0
+03/06/2013
+77777
+Wonder Bread
+1.29	0
+03/06/2013
+77777
+1.5 dozen eggs
+1.29	0
+03/07/2013
+77777
+Disney DVD Collection
+49.95	0
+03/07/2013
+77777
+The Princess Bride
+17.75	0
+03/13/2013
+77777
+Rack of Lamb
+14.79	0
+03/09/2013
+77777
+Crest Toothpaste
+7.59	0
+03/09/2013
+77777
+Grosse Pointe Blank DVD
+16.99	0
+03/09/2013
+77777
+Roasted Garlic Bread
+7.29	0
+03/09/2013
+77777
+Coke
+6.79	0

@@ -7,7 +7,9 @@ int main()
     club.updateMembers();
     //club.displayMembers();
     club.updateSalesforMembers();
-    club.memberPurchasesReport("Preffered");
-    club.membershipExpirationReport(12);
+    club.writeOut();
+    //club.sort_alpha();
+    //club.memberPurchasesReport("Preffered");
+    //club.membershipExpirationReport(12);
     return EXIT_SUCCESS;
 }

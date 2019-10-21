@@ -45,12 +45,11 @@ public:
 
     //REQ #9 - Bool to return true if member added, false if not added
     bool addMemberWC(Member newMember);
-
+    void writeOut();
     //#10
     string basicMembershipRec(string name, string id);
     string PreferredMembershipRec(string name, string id);
     string AllMembershipRec();
-
     //Initialize databases
     Container<Member> basicMemberDatabase;      //IN OUT - A continer of basic
                                                 //Members

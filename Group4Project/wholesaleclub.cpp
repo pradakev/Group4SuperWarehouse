@@ -1,23 +1,39 @@
+//Benjamin bussiness is not having any purchases added to it
+//for some reason and it is seen when calling the function
+//for rebate which is somehow 0 so should check rebate functions
+//or updateSales function.
+//
+//search for '///////////////'
 #include "wholesaleclub.h"
 #include <sstream>
 #include <iomanip>
+#include <string>
 
 wholesaleClub::wholesaleClub()
 {
 
 }
-/**************************************************************************
-* Mutator
-*__________________________________________________________________________
-* Reads through a file of members, adding basic members to the basic
-* memberDatabase and preferred to the preferredMemberDatabase
-*__________________________________________________________________________
-* PRO-CONDITIONS:
-*   warehouseshoppers.txt must exist
-* POST-CONDITIONS:
-*   basicMemberDatabase is filled with basic members, preferredMemberDatabase
-*   is filled with preferred members.
-**************************************************************************/
+
+/**************************************************************
+ *  mutator: updateMembers
+ **************************************************************
+ *  This function will read membership information from a file
+ *  and assign the information to multiple variables that will
+ *  be used in constructing a Member object. This Member object
+ *  is then added to one of two Container object that hold
+ *  Member objects depending on the membership type. This is
+ *  done for all memberships in the file.
+ **************************************************************
+ *  PRE-CONDITIONS:
+ *      A 'warehouse shoppers.txt' file should exist for the
+ *      program to read information.
+ *
+ *  POST-CONDITIONS:
+ *      Both basicMemberDatabase and preferredMemberDatabase
+ *      attributes will be filled with Member objects based on
+ *      membership type.
+ *
+ **************************************************************/
 void wholesaleClub::updateMembers()
 {
     ifstream reader;
@@ -608,6 +624,7 @@ string wholesaleClub::memberDuesReport()
     stringstream ss;
     ss << "MEMBERSHIP DUES REPORT:" << endl << endl;
     Container<Member>::Iterator iter;
+    basicMemberDatabase.sort_alpha();
     iter = basicMemberDatabase.begin();
     for(int i = 0; i < basicMemberDatabase.length(); i++)
     {
@@ -619,6 +636,7 @@ string wholesaleClub::memberDuesReport()
         iter++;
     }
 
+    preferredMemberDatabase.sort_alpha();
     iter = preferredMemberDatabase.begin();
     for(int i = 0; i < preferredMemberDatabase.length(); i++)
     {
@@ -635,6 +653,7 @@ string wholesaleClub::memberDuesReport()
 }
 
 //REQ #9
+
 /**************************************************************************
 * Mutator
 *__________________________________________________________________________
@@ -647,7 +666,8 @@ string wholesaleClub::memberDuesReport()
 *   Returns true if the member was succesfully added and adds the new member
 * to the correct data base.
 **************************************************************************/
-bool wholesaleClub::addMemberWC(Member newMember)
+bool wholesaleClub::addMemberWC(Member newMember) //after add member should write to a file should be able to add purchases
+
 {
     //Get membership type, iterate through respective database
     //Then make sure if new member is not duplicate (id, name)
@@ -685,8 +705,6 @@ bool wholesaleClub::addMemberWC(Member newMember)
 
     //Member is not duplicate
     return true;
-
-
 }
 /**************************************************************************
 * Accessor
@@ -840,4 +858,67 @@ string wholesaleClub::AllMembershipRec()
     report = ss.str();
     cout << report << endl;
     return report;
+}
+
+//Requirement #9?
+//Save everything
+void wholesaleClub::writeOut()
+{
+    stringstream content;
+    stringstream content2;
+    ofstream out;
+    ifstream in;
+    string line = "";
+    Container<Member>::Iterator iter;
+    Container<Item> temp;
+    Container<Item>::Iterator iter2;
+
+    out.open("warehouse shoppers.txt");
+    //write out preferred member data
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        //name, id, membership, date
+        content << (*iter).getName() << "\r\n" << (*iter).getId() << "\r\n"
+            <<(*iter).getMembership() << "\r\n" << (*iter).getExpiration() << "\r\n";
+        iter++;
+    }
+
+    //write out basic member data
+    iter = basicMemberDatabase.begin();
+    for(int i = 0; i < basicMemberDatabase.length(); i++)
+    {
+        //name, id, membership, date
+        content << (*iter).getName() << "\r\n" << (*iter).getId() << "\r\n"
+            <<(*iter).getMembership() << "\r\n" << (*iter).getExpiration() << "\r\n";
+        iter++;
+    }
+    out << content.str();
+    out.close();
+
+    //write out preferred member data to any day sales file
+    out.open("day1 copy.txt");
+    iter = preferredMemberDatabase.begin();
+    for(int i = 0; i < preferredMemberDatabase.length(); i++)
+    {
+        temp = (*iter).getItems();
+        iter2 = temp.begin();
+        for(int i =0; i < temp.length(); i++)
+        {
+            //date, id, name, price, tab, quantity
+            content2 << (*iter2).getDateBought() << "\r\n"
+                <<(*iter).getId() << "\r\n"
+                <<(*iter2).getName() << "\r\n"
+                <<(*iter2).getPrice() <<"\t"
+                << (*iter2).getQuantityAvailable() << "\r\n";
+                //<<stoi((*iter2).getQuantityAvailable()) - stoi((*iter2).getQuantitySold()) << "\r\n";
+            iter2++;
+        }
+        out << content2.str();
+        iter++;
+    }
+    out.close();
+
+    //write out basic member data
+    //copy paste the above and edit for basicMemberDatabase
 }
