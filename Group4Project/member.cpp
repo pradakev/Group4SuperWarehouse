@@ -36,13 +36,14 @@ double Member::sumPurchasesDate(string date)
 {
     double total = 0;
     Container<Item>::Iterator it;
-    for(it = itemsBought.begin(); it != itemsBought.end();
-        it++)
+    it = itemsBought.begin();
+    for(int i = 0; i < itemsBought.length(); i++)
     {
         if((*it).getDateBought() == date)
         {
             total += (*it).getPrice();
         }
+        it++;
 
     }
     return total;
@@ -125,9 +126,14 @@ string Member::allPurchasesReport()
     string report;
     stringstream ss;
     Container<Item>::Iterator it;
-    for(it = itemsBought.begin(); it != itemsBought.end();
-        it++)
-        cout << *it << endl;
+    it = itemsBought.begin();
+    for(int i = 0; i < itemsBought.length(); i++)
+    {
+        cout << (*it) << endl;
+        ss << (*it) << endl;
+
+        it++;
+    }
     
     report = ss.str();
     return report;
@@ -138,9 +144,11 @@ string Member::totalSpentWTax(float tax)
     //Iterate through items bought and add to total
     float total = 0;
     Container<Item>::Iterator it;
-    for(it = itemsBought.begin(); it != itemsBought.end(); it++)
+    it = itemsBought.begin();
+    for(int i = 0; i < itemsBought.length(); i++)
     {
         total += (*it).getPrice();
+        it++;
     }
     total *= tax;
 

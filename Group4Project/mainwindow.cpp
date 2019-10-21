@@ -96,6 +96,7 @@ void MainWindow::on_WelcomeMembersButton_clicked()
 
 void MainWindow::on_DoneMembersButton_clicked()
 {
+    ui->OutputMembersText->setText("Choose an option below.");
     goToPage(0);
 }
 

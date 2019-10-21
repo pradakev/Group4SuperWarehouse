@@ -185,7 +185,7 @@ ostream& operator<<(ostream& os, const Item& paramItem)
     os << "\n========ITEM OBJECT========\n"
         << "++NAME: " << paramItem.name << "\n"
         << "++TOTAL SALES PRICE: " << paramItem.totalSalesPrice << "\n"
-        << "++QTY: " << paramItem.quantityAvailable << "\n"
+//        << "++QTY: " << paramItem.quantityAvailable << "\n"
         << "++SOLD: " << paramItem.quantitySold << "\n"
         << "++DATE BOUGHT: " << paramItem.dayBought << "\n"
         << "==============================\n";
